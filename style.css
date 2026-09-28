@@ -93,6 +93,7 @@ button, select { font: inherit; }
   border-top: 2px solid var(--border);
   border-left: 2px solid var(--border);
   background: #fff;
+  max-width: 98vw;
 }
 
 #specialized-grid {grid-template-rows: repeat(11, auto);}

@@ -247,15 +247,27 @@ const courseCsv = `id,name,term,year,credits,category
 const certCsv = `cert_id,cert_name,course_id
 FE,基本情報技術者,2
 FE,基本情報技術者,3
-AP,応用情報技術者,2`;
+AP,応用情報技術者,2
+`;
 
-const courseDb = csvToMap(courseCsv, 'id', {
-  credits: Number,
-});
+const creditsListCsv = `credit_name,credit_id,credit_limit
+総修得,total-completed,124
+基礎総合,basic-completed,40
+総合教養,generalEducation-completed,12
+総合語学,language-completed,6
+実践力養成・キャリア開発,careerAndSkills-completed,12
+専門教育科目,specialized-completed,84
+専門基礎,specialized_basic-completed,20
+専門発展,specialized_advanced-completed,14
+専門応用,specialized_applied-completed,24
+履修中,in-progress-count,-1
+`;
 
-const certificationDb = csvToGroupedMap(certCsv, 'cert_id', {
-  course_id: String,
-});
+const courseDb = csvToMap(courseCsv, 'id', { credits: Number });
+
+const certificationDb = csvToGroupedMap(certCsv, 'cert_id', { course_id: String });
+
+const creditsSummaryDb = csvToMap(creditsListCsv, 'credit_id', { credit_limit: Number });
 
 // ---------------------------------------------------------------------------
 // User state
@@ -499,6 +511,39 @@ function populateCertificationSelect() {
 // ---------------------------------------------------------------------------
 // Credits / summary
 // ---------------------------------------------------------------------------
+function initializeSummary() {
+//   const creditsListCsv =
+// // credit_id,credit_name,credit_limit
+// `総修得,total-completed,124
+// 基礎総合,basic-completed,40
+// 総合教養,generalEducation-completed,12
+// 総合語学,language-completed,6
+// 実践力養成・キャリア開発,careerAndSkills-completed,12
+// 専門教育科目,specialized-completed,84
+// 専門基礎,specialized_basic-completed,20
+// 専門発展,specialized_advanced-completed,14
+// 専門応用,specialized_applied-completed,24
+// 履修中,in-progress-count,-1
+// `;
+  const parent = document.querySelector(".summary-grid");
+
+  creditsSummaryDb.forEach(e => {
+    const credit_id = e["credit_id"];
+    const credit_name = e["credit_name"]
+    const credit_limit = e["credit_limit"];
+
+    const div = create("div", null, {classList: "summary-card"});
+    const span = create("span", credit_name);
+    const strong = create("strong", "0", {id: credit_id});
+
+    div.append(span);
+    div.append(strong);
+
+    parent.append(div);
+  })
+
+}
+
 function sumCompleted(panelSelector) {
   let sum = 0;
 
@@ -593,6 +638,7 @@ function resetState() {
 document.addEventListener(
   'DOMContentLoaded',
   () => {
+    initializeSummary();
     initializeCourses();
     populateCertificationSelect();
 
