@@ -1,0 +1,236 @@
+@charset "UTF-8";
+:root {
+  --border: #222;
+  --text: #1c1c1c;
+  --muted: #6b6b6b;
+  --blue: #e7f4ff;
+  --green: #ecffd9;
+  --pink: #ffe7fb;
+  --header: #f6f6f6;
+  --completed: #bfe9c7;
+  --current: #fff2a8;
+  --planned: #d8edff;
+  --cert: #f7c948;
+}
+
+* { box-sizing: border-box; }
+html {color-scheme: light;}
+body {
+  margin: 0;
+  padding: 18px;
+  color: var(--text);
+  background: #fff;
+  font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, system-ui, sans-serif;
+  font-size: 13px;
+}
+
+button, select { font: inherit; }
+
+.app {
+  width: min(1900px, 100%);
+  margin: 0 auto;
+}
+
+.app-header { margin-bottom: 16px; }
+.app-header h1 { margin: 0; font-size: 24px; }
+.app-description { margin: 4px 0 14px; color: var(--muted); }
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9px 11px;
+  border: 1px solid #aaa;
+  border-radius: 7px;
+  background: #fafafa;
+}
+.summary-card span { color: var(--muted); font-size: 11px; }
+.summary-card strong { font-size: 18px; }
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+.controls label { font-weight: 700; }
+.controls select,
+.controls button {
+  min-height: 32px;
+  padding: 4px 9px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  background: #fff;
+}
+.controls button { cursor: pointer; }
+.controls button:hover { background: #f4f4f4; }
+.hint { margin: 0; color: var(--muted); font-size: 11px; }
+
+.curriculum-container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.curriculum-panel { min-width: 0; }
+.curriculum-panel h2 { margin: 0 0 5px; font-size: 17px; }
+.panel-note { margin: 0 0 7px; color: #d00; font-weight: 700; }
+
+.curriculum-grid {
+  display: grid;
+  grid-template-columns: 30px 30px 30px repeat(4, minmax(145px, 1fr));
+  grid-template-columns: 30px 30px 30px 1.5fr 1.5fr 1fr 1fr;
+  grid-template-rows: repeat(13, auto);
+  border-top: 2px solid var(--border);
+  border-left: 2px solid var(--border);
+  background: #fff;
+}
+
+#specialized-grid {grid-template-rows: repeat(11, auto);}
+
+.cell {
+  min-width: 0;
+  min-height: 32px;
+  padding: 5px 7px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+}
+
+.head {
+  background: var(--header);
+  text-align: center;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:is(:nth-child(1), :nth-child(2), :nth-child(3)) {
+    writing-mode: vertical-lr;
+  }
+}
+.head.year { padding-block: 7px; }
+
+.major, .middle, .minor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-weight: 700;
+  letter-spacing: .06em;
+  padding-inline: 4px;
+  line-height: 1.0;          /* 行間（列の間隔）を調整する */
+}
+.major { font-size: 14px; }
+.middle { font-size: 12px; }
+.minor { font-size: 12px; }
+
+.group-basic, .group-general, .group-specialist { background: var(--blue); }
+.group-language, .group-development { background: var(--green); }
+.group-career, .group-application { background: var(--pink); }
+
+.courses {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.course {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 5px;
+  align-items: baseline;
+  min-height: 28px;
+  padding: 4px 6px;
+  border: 0;
+  border-bottom: 1px solid rgb(0 0 0 / 11%);
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  /* max-height: 1em; */
+}
+.course:last-child { border-bottom: 0; }
+.course:hover { background: rgb(255 255 255 / 45%); }
+.course:focus-visible { box-shadow: inset 0 0 0 2px #2f80ed; }
+
+.course-name {min-width: 0;overflow-wrap: anywhere;font-size: 12px;}
+.course-term, .course-credits {
+  color: #444;
+  white-space: nowrap;
+  font-size: 11px;
+}
+.course-credits { text-align: right; font-weight: 700; }
+
+.course.status-in-progress {
+  background: var(--current);
+  box-shadow: inset 3px 0 0 #e0ac00;
+}
+.course.status-completed {
+  background: var(--completed);
+  box-shadow: inset 3px 0 0 #399653;
+}
+.course.status-completed .course-name { text-decoration: line-through; opacity: .72; }
+.course.status-planned {
+  background: var(--planned);
+  box-shadow: inset 3px 0 0 #438ccb;
+}
+
+.course.cert-highlight {
+  box-shadow: inset 0 0 0 2px var(--cert), 0 0 0 1px rgb(247 201 72 / 60%);
+  z-index: 2;
+}
+.course.cert-highlight.status-completed { box-shadow: inset 0 0 0 2px var(--cert), inset 3px 0 0 #399653; }
+
+.special-row {
+  padding: 7px 9px;
+  background: #fff;
+}
+.special-list {
+  display: grid;
+  gap: 3px;
+  margin-top: 3px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend-dot {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border: 1px solid #999;
+  border-radius: 3px;
+}
+.legend-dot.completed { background: var(--completed); }
+.legend-dot.current { background: var(--current); }
+.legend-dot.planned { background: var(--planned); }
+.legend-dot.cert { background: var(--cert); }
+
+@media (max-width: 1450px) {
+  .curriculum-container { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 900px) {
+  body { padding: 8px; }
+  .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .curriculum-container { display: block; min-width: 1180px; width: max-content; }
+  .curriculum-panel + .curriculum-panel { margin-top: 18px; }
+}

@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>情報ネットワーク学科 授業科目一覧</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="app">
+      <header class="app-header">
+        <div>
+          <h1>情報ネットワーク学科 授業科目一覧</h1>
+          <p class="app-description">履修状況・資格による単位認定・必要単位数をまとめて確認</p>
+        </div>
+        <div class="summary-grid" aria-live="polite">
+          <div class="summary-card">
+            <span>総修得</span>
+            <strong id="total-completed">0 / 124</strong>
+          </div>
+          <div class="summary-card">
+            <span>基礎総合</span>
+            <strong id="basic-completed">0 / 40</strong>
+          </div>
+          <div class="summary-card">
+            <span>専門教育</span>
+            <strong id="specialized-completed">0 / 84</strong>
+          </div>
+          <div class="summary-card">
+            <span>履修中</span>
+            <strong id="in-progress-count">0科目</strong>
+          </div>
+        </div>
+        <div class="controls">
+          <label for="cert-select">資格単位認定を表示</label>
+          <select id="cert-select">
+            <option value="">表示しない</option>
+          </select>
+          <button id="clear-cert" type="button">ハイライト解除</button>
+          <button id="reset-state" type="button">履修状態をリセット</button>
+        </div>
+        <p class="hint">講義をクリックすると「未選択 → 履修中 → 修得済み → 未選択」と切り替わります。</p>
+      </header>
+      <div class="curriculum-container">
+        <section class="curriculum-panel" id="basic-curriculum" data-required-credits="40">
+          <h2>別表Ⅱ－Ⅰ　基礎総合科目の開講時期と単位数</h2>
+          <p class="panel-note">※必修14単位を含み、40単位以上修得</p>
+          <div class="curriculum-grid" id="basic-grid" aria-label="基礎総合科目">
+            <div class="cell head" style="grid-column:1;grid-row:1;">
+              大分類
+            </div>
+            <div class="cell head" style="grid-column:2;grid-row:1;">中分類</div>
+            <div class="cell head" style="grid-column:3;grid-row:1;">小分類</div>
+            <div class="cell head year" style="grid-column:4;grid-row:1;">1年</div>
+            <div class="cell head year" style="grid-column:5;grid-row:1;">2年</div>
+            <div class="cell head year" style="grid-column:6;grid-row:1;">3年</div>
+            <div class="cell head year" style="grid-column:7;grid-row:1;">4年</div>
+            <div class="cell major group-basic" style="grid-column:1;grid-row:2 / -1">基礎総合科目</div>
+            <div class="cell middle group-general" style="grid-column:2;grid-row:2 / span 4;">総合教養</div>
+            <div class="cell middle group-language" style="grid-column:2;grid-row:6 / span 4;">総合語学</div>
+            <div class="cell middle group-career" style="grid-column:2;grid-row:10 / span 3;">
+              実践力養成・<br>キャリア開発
+            </div>
+            <div class="cell minor group-general" style="grid-column:3;grid-row:2;">人文科学</div>
+            <div class="cell courses group-general" style="grid-column:4;grid-row:2;">
+              <div class="course" data-course-id="1" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="2" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="3" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="4" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="5" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-general" style="grid-column:5;grid-row:2;"></div>
+            <div class="cell courses group-general" style="grid-column:6;grid-row:2;"></div>
+            <div class="cell courses group-general" style="grid-column:7;grid-row:2;"></div>
+            <div class="cell minor group-general" style="grid-column:3;grid-row:3;">社会科学</div>
+            <div class="cell courses group-general" style="grid-column:4;grid-row:3;">
+              <div class="course" data-course-id="6" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="7" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="8" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="9" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="10" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="11" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-general" style="grid-column:5;grid-row:3;"></div>
+            <div class="cell courses group-general" style="grid-column:6;grid-row:3;"></div>
+            <div class="cell courses group-general" style="grid-column:7;grid-row:3;"></div>
+            <div class="cell minor group-general" style="grid-column:3;grid-row:4;">自然<br>科学</div>
+            <div class="cell courses group-general" style="grid-column:4;grid-row:4;">
+              <div class="course" data-course-id="12" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-general" style="grid-column:5;grid-row:4;"></div>
+            <div class="cell courses group-general" style="grid-column:6;grid-row:4;"></div>
+            <div class="cell courses group-general" style="grid-column:7;grid-row:4;"></div>
+            <div class="cell minor group-general" style="grid-column:3;grid-row:5;">健康科学<br>スポーツ</div>
+            <div class="cell courses group-general" style="grid-column:4;grid-row:5;">
+              <div class="course" data-course-id="13" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="113" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-general" style="grid-column:5;grid-row:5;">
+              <div class="course" data-course-id="14" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="15" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-general" style="grid-column:6;grid-row:5;"></div>
+            <div class="cell courses group-general" style="grid-column:7;grid-row:5;"></div>
+            <div class="cell minor group-language" style="grid-column:3;grid-row:6;">英語</div>
+            <div class="cell courses group-language" style="grid-column:4;grid-row:6;">
+              <div class="course" data-course-id="16" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="17" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="18" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="19" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-language" style="grid-column:5;grid-row:6;">
+              <div class="course" data-course-id="20" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="21" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-language" style="grid-column:6;grid-row:6;"></div>
+            <div class="cell courses group-language" style="grid-column:7;grid-row:6;"></div>
+            <div class="cell minor group-language" style="grid-column:3;grid-row:7;">中国語</div>
+            <div class="cell courses group-language" style="grid-column:4;grid-row:7;"></div>
+            <div class="cell courses group-language" style="grid-column:5;grid-row:7;">
+              <div class="course" data-course-id="22" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="23" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-language" style="grid-column:6;grid-row:7;"></div>
+            <div class="cell courses group-language" style="grid-column:7;grid-row:7;"></div>
+            <div class="cell minor group-language" style="grid-column:3;grid-row:8;">韓国語</div>
+            <div class="cell courses group-language" style="grid-column:4;grid-row:8;"></div>
+            <div class="cell courses group-language" style="grid-column:5;grid-row:8;">
+              <div class="course" data-course-id="24" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="25" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-language" style="grid-column:6;grid-row:8;"></div>
+            <div class="cell courses group-language" style="grid-column:7;grid-row:8;"></div>
+            <div class="cell minor group-language" style="grid-column:3;grid-row:9;">日本語</div>
+            <div class="cell courses group-language" style="grid-column:4;grid-row:9;">
+              <div class="course" data-course-id="26" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="27" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-language" style="grid-column:5;grid-row:9;">
+              <div class="course" data-course-id="28" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="29" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-language" style="grid-column:6;grid-row:9;"></div>
+            <div class="cell courses group-language" style="grid-column:7;grid-row:9;"></div>
+            <div class="cell minor group-career" style="grid-column:3;grid-row:10;">実践スキル</div>
+            <div class="cell courses group-career" style="grid-column:4;grid-row:10;">
+              <div class="course" data-course-id="30" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="31" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="32" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="33" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-career" style="grid-column:5;grid-row:10;"></div>
+            <div class="cell courses group-career" style="grid-column:6;grid-row:10;"></div>
+            <div class="cell courses group-career" style="grid-column:7;grid-row:10;"></div>
+            <div class="cell minor group-career" style="grid-column:3;grid-row:11 / span 2;">キャリア<br>開発</div>
+            <div class="cell courses group-career" style="grid-column:4;grid-row:11;">
+              <div class="course" data-course-id="34" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="35" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-career" style="grid-column:5;grid-row:11;">
+              <div class="course" data-course-id="37" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="38" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-career" style="grid-column:6;grid-row:11 / span 2;">
+              <div class="course" data-course-id="39" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="40" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-career" style="grid-column:7;grid-row:11 / span 2;"></div>
+            <div class="cell courses group-career" style="grid-column:4 / 6;grid-row:12;">
+              <div class="course" data-course-id="36" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell middle special-row" style="grid-column:2;grid-row:13;">特別実習・<br>講義</div>
+            <div class="cell minor special-row" style="grid-column:3;grid-row:13;">特別実習・<br>講義基礎</div>
+            <div class="cell special-row" style="grid-column:4 / -1;grid-row:13;">
+              <div class="special-list">
+                <span>　特別実習・講義「語学」　　　　　1〜4</span>
+                <span>　特別実習・講義「実践力養成」　　1〜4</span>
+                <span>　特別実習・講義「キャリア」　　　1〜4</span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="curriculum-panel" id="specialized-curriculum" data-required-credits="84">
+          <h2>別表Ⅱ－Ⅱ　専門教育科目の開講時期と単位数</h2>
+          <p class="panel-note">※必修26単位を含み、84単位以上修得</p>
+          <div class="curriculum-grid" id="specialized-grid" aria-label="専門教育科目">
+            <div class="cell head" style="grid-column:1;grid-row:1;">
+              大分類
+            </div>
+            <div class="cell head" style="grid-column:2;grid-row:1;">中分類</div>
+            <div class="cell head" style="grid-column:3;grid-row:1;">小分類</div>
+            <div class="cell head year" style="grid-column:4;grid-row:1;">1年</div>
+            <div class="cell head year" style="grid-column:5;grid-row:1;">2年</div>
+            <div class="cell head year" style="grid-column:6;grid-row:1;">3年</div>
+            <div class="cell head year" style="grid-column:7;grid-row:1;">4年</div>
+            <div class="cell major group-specialist" style="grid-column:1;grid-row:2 / -1;">専門教育科目</div>
+            <div class="cell middle group-specialist" style="grid-column:2;grid-row:2 / span 3;">専門基礎</div>
+            <div class="cell middle group-development" style="grid-column:2;grid-row:5 / span 2;">専門発展</div>
+            <div class="cell middle group-application" style="grid-column:2;grid-row:7 / span 3;">専門応用</div>
+            <div class="cell middle group-specialist" style="grid-column:2;grid-row:10;">演習</div>
+            <div class="cell minor group-specialist" style="grid-column:3;grid-row:2;">情報</div>
+            <div class="cell courses group-specialist" style="grid-column:4;grid-row:2;">
+              <div class="course" data-course-id="41" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="42" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="43" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="44" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="45" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-specialist" style="grid-column:5;grid-row:2;">
+              <div class="course" data-course-id="46" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-specialist" style="grid-column:6 / -1;grid-row:2;">
+              <div class="course" data-course-id="47" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="48" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="49" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-specialist" style="grid-column:7;grid-row:2;"></div>
+            <div class="cell minor group-specialist" style="grid-column:3;grid-row:3 / span 2;">経営・会計</div>
+            <div class="cell courses group-specialist" style="grid-column:4;grid-row:3 / span 2;">
+              <div class="course" data-course-id="50" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="51" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="52" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-specialist" style="grid-column:5;grid-row:3;">
+              <div class="course" data-course-id="53" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="54" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="55" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="56" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-specialist" style="grid-column:6 / -1;grid-row:3;"></div>
+            <div class="cell courses group-specialist" style="grid-column:7;grid-row:3 / span 2;"></div>
+            <div class="cell courses group-specialist" style="grid-column:5 / span 2;grid-row:4;">
+              <div class="course" data-course-id="57" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell minor group-development" style="grid-column:3;grid-row:5;">情報</div>
+            <div class="cell courses group-development" style="grid-column:4;grid-row:5;">
+              <div class="course" data-course-id="58" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="59" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="60" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-development" style="grid-column:5;grid-row:5;">
+              <div class="course" data-course-id="61" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="62" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="63" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="64" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="65" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="66" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="67" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="68" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="69" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="70" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-development" style="grid-column:6 / -1;grid-row:5;">
+              <div class="course" data-course-id="71" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="72" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="73" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="74" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-development" style="grid-column:7;grid-row:5;"></div>
+            <div class="cell minor group-development" style="grid-column:3;grid-row:6;">経営・会計</div>
+            <div class="cell courses group-development" style="grid-column:4;grid-row:6;">
+              <div class="course" data-course-id="75" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-development" style="grid-column:5;grid-row:6;">
+              <div class="course" data-course-id="76" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="77" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="78" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-development" style="grid-column:6 / -1;grid-row:6;">
+              <div class="course" data-course-id="79" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-development" style="grid-column:7;grid-row:6;"></div>
+            <div class="cell minor group-application" style="grid-column:3;grid-row:7;">ネットワーク</div>
+            <div class="cell courses group-application" style="grid-column:4;grid-row:7;">
+              <div class="course" data-course-id="80" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-application" style="grid-column:5;grid-row:7;">
+              <div class="course" data-course-id="81" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="82" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="83" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="84" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="85" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="86" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-application" style="grid-column:6 / -1;grid-row:7;">
+              <div class="course" data-course-id="87" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="88" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="89" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="90" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-application" style="grid-column:7;grid-row:7;"></div>
+            <div class="cell minor group-application" style="grid-column:3;grid-row:8;">データサイエンス</div>
+            <div class="cell courses group-application" style="grid-column:4;grid-row:8;">
+              <div class="course" data-course-id="91" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="92" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-application" style="grid-column:5;grid-row:8;">
+              <div class="course" data-course-id="93" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="94" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="95" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-application" style="grid-column:6 / -1;grid-row:8;">
+              <div class="course" data-course-id="96" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="97" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="98" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="99" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="100" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="101" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-application" style="grid-column:7;grid-row:8;"></div>
+            <div class="cell minor group-application" style="grid-column:3;grid-row:9;">国際<br>ビジネス</div>
+            <div class="cell courses group-application" style="grid-column:4;grid-row:9;"></div>
+            <div class="cell courses group-application" style="grid-column:5;grid-row:9;">
+              <div class="course" data-course-id="102" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="103" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-application" style="grid-column:6 / -1;grid-row:9;">
+              <div class="course" data-course-id="104" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-application" style="grid-column:7;grid-row:9;"></div>
+            <div class="cell minor group-specialist" style="grid-column:3;grid-row:10;">ゼミ</div>
+            <div class="cell courses group-specialist" style="grid-column:4;grid-row:10;">
+              <div class="course" data-course-id="105" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="106" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-specialist" style="grid-column:5;grid-row:10;">
+              <div class="course" data-course-id="107" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="108" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-specialist" style="grid-column:6;grid-row:10;">
+              <div class="course" data-course-id="109" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="110" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell courses group-specialist" style="grid-column:7;grid-row:10;">
+              <div class="course" data-course-id="111" tabindex="0" role="button" aria-label="講義"></div>
+              <div class="course" data-course-id="112" tabindex="0" role="button" aria-label="講義"></div>
+            </div>
+            <div class="cell middle special-row" style="grid-column:2;grid-row:11;">特別実習・<br>講義</div>
+            <div class="cell minor special-row" style="grid-column:3;grid-row:11;">特別実習・<br>講義基礎</div>
+            <div class="cell special-row" style="grid-column:4 / -1;grid-row:11;">
+              <div class="special-list">
+                <span>　特別実習・講義「経営」　　　　1〜4</span>
+                <span>　特別実習・講義「会計」　　　　1〜4</span>
+                <span>　特別実習・講義「情報」　　　　1〜4</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <footer class="legend">
+        <span>
+          <i class="legend-dot completed"></i>
+          修得済み
+        </span>
+        <span>
+          <i class="legend-dot current"></i>
+          履修中
+        </span>
+        <span>
+          <i class="legend-dot planned"></i>
+          受講予定
+        </span>
+        <span>
+          <i class="legend-dot cert"></i>
+          資格単位認定候補
+        </span>
+      </footer>
+    </main>
+    <script src="script.js" defer></script>
+  </body>
+</html>

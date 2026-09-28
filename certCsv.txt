@@ -1,0 +1,4 @@
+cert_id,cert_name,course_id
+FE,基本情報技術者,2
+FE,基本情報技術者,3
+AP,応用情報技術者,2
