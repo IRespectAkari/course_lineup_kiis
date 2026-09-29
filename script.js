@@ -242,6 +242,7 @@ const courseCsv = `id,name,term,year,credits,category,middle
 112,情報学専門演習 II,通年,4,4,専門教育科目,演習
 113,スポーツ,後期,1,1,基礎総合科目,総合教養
 `;
+// id,name,term,year,credits,category,middle
 
 // SAMPLE ONLY: replace with the actual institutional mapping.
 const certCsv = `cert_id,cert_name,course_id
@@ -251,7 +252,18 @@ AP,応用情報技術者,2
 `;
 
 const creditsListCsv = `credit_name,credit_id,credit_limit
-総修得,total-completed,124
+総修得,total_completed,124
+基礎総合,basic_completed,40
+総合教養,generalEducation_completed,12
+総合語学,language_completed,6
+実践力養成・キャリア開発,careerAndSkills_completed,12
+専門教育科目,specialized_completed,84
+専門基礎,specialized_basic_completed,20
+専門発展,specialized_advanced_completed,14
+専門応用,specialized_applied_completed,24
+履修中,in_progress_count,0
+`;
+/*総修得,total-completed,124
 基礎総合,basic-completed,40
 総合教養,generalEducation-completed,12
 総合語学,language-completed,6
@@ -261,7 +273,7 @@ const creditsListCsv = `credit_name,credit_id,credit_limit
 専門発展,specialized_advanced-completed,14
 専門応用,specialized_applied-completed,24
 履修中,in-progress-count,0
-`;
+*/
 
 // const courseDb = csvToMap(courseCsv, 'id', { credits: Number });
 const courseDb = csvToMap(courseCsv, 'id', { year: Number, credits: Number });
@@ -270,12 +282,20 @@ const certificationDb = csvToGroupedMap(certCsv, 'cert_id', { course_id: String 
 
 const creditsSummaryDb = csvToMap(creditsListCsv, 'credit_id', { credit_limit: Number });
 
+const middleSet = new Set(SELECT(courseDb, "middle").flat());
+
 // ---------------------------------------------------------------------------
 // SELECT 再現
 // ---------------------------------------------------------------------------
-function SELECT(...columns) {
-  return [...courseDb.values()].map(e=>columns.map(column => e[column]))
+function SELECT(DB, ...columns) {
+  return [...DB.values()].map(e=>columns.map(column => e[column]))
 }
+
+// DBのcolumnがequalsを含むレコードを返す
+function WHEREcreditsList(equals) {
+  return creditsListCsv.split("\n").map(e=>e.split(",")).find(e=>e.includes(equals))
+}
+
 
 // ---------------------------------------------------------------------------
 // User state
@@ -503,6 +523,52 @@ function sumCompleted(panelSelector) {
   return sum;
 }
 
+// 中分類 => 中分類の取得単位の合計
+/*
+<中分類>の講義id達を取得し、userStateから検索し、completedのみをfilterし、合計する
+総合教養の講義idを取得
+  SELECT(courseDb, "id", "middle").filter(([id, middle]) => middle == "総合教養").flatMap(([id, middle]) => id)
+userStateから検索し、completedのみをfilterし、
+  getStatus("3") == "completed"
+  new Set(userState.keys()).has("3")
+
+
+*/
+/*['total-completed']
+['basic-completed']
+['generalEducation-completed']
+['language-completed']
+['careerAndSkills-completed']
+['specialized-completed']
+['specialized_basic-completed']
+['specialized_advanced-completed']
+['specialized_applied-completed']
+['in-progress-count']
+*/
+function sumCompleted2(middle) {
+console.log(middle)
+
+  // const middleName = WHEREcreditsList(middle[0])[0];
+  const middleName = WHEREcreditsList(middle)[0];
+
+// middle(総合教養)の講義idを取得
+  const middlesID = SELECT(courseDb, "id", "middle")
+    .filter(([id, m]) => m == middleName)// middleName == 総合教養
+    .flatMap(([id, m]) => id);
+// console.log(middlesID)
+// userStateから検索し、completedのみをfilterし、
+  // const completedSet = new Set(userState.keys())
+  // completedのidのみ取得
+  const completed = middlesID.filter(id => getStatus(id) == "completed");
+  const credits = SELECT(courseDb, "id", "credits")
+    .filter(([id, c]) => completed.includes(id))
+    .flatMap(([id, c]) => c)
+
+  const sum = credits.reduce((c, a) => c + a, 0);
+console.log(middle, credits, sum)
+  return sum;
+}
+
 function countInProgress() {
   let count = 0;
 
@@ -516,21 +582,60 @@ function countInProgress() {
 }
 
 function updateSummary() {
-  const idAndMiddle = SELECT("id", "middle");
-  console.log(idAndMiddle)
+  const idAndMiddle = SELECT(courseDb, "id", "middle");
+// console.log(idAndMiddle)
 
+  const summarys = SELECT(creditsSummaryDb, "credit_id");
+console.log(summarys)
 
+  // summarys.forEach(e=>{
+  // // middleSet.forEach(e=>console.log(e))
+  //   const completedCredits = sumCompleted2(e);
+  //   $(`#${e}`).textContent = completedCredits;
+  // })
 
-  const basic       = sumCompleted('#basic-curriculum');
-  const specialized = sumCompleted('#specialized-curriculum');
+  const generalEducation     = sumCompleted2("generalEducation_completed");
+  const language             = sumCompleted2("language_completed");
+  const careerAndSkills      = sumCompleted2("careerAndSkills_completed");
+
+  const specialized_basic    = sumCompleted2("specialized_basic_completed");
+  const specialized_advanced = sumCompleted2("specialized_advanced_completed");
+  const specialized_applied  = sumCompleted2("specialized_applied_completed");
+
+  const in_progress_count    = sumCompleted2("in_progress_count");
+
+  const basic       = generalEducation + language + careerAndSkills;
+  const specialized = specialized_basic + specialized_advanced + specialized_applied;
 
   const total = basic + specialized;
 
-  $('#basic-completed').textContent = `${basic} / 40`;
+  $("#generalEducation_completed").textContent = generalEducation;
+  $("#language_completed").textContent = language;
+  $("#careerAndSkills_completed").textContent = careerAndSkills;
 
-  document.querySelector('#specialized-completed').textContent = `${specialized} / 84`;
-  document.querySelector('#total-completed').textContent = `${total} / 124`;
-  document.querySelector('#in-progress-count').textContent = `${countInProgress()}科目`;
+  $("#specialized_basic_completed").textContent = specialized_basic;
+  $("#specialized_advanced_completed").textContent = specialized_advanced;
+  $("#specialized_applied_completed").textContent = specialized_applied;
+
+  $("#in_progress_count").textContent = in_progress_count;
+
+  $("#basic_completed").textContent = basic;
+  $("#specialized_completed").textContent = specialized;
+
+  $("#total_completed").textContent = total;
+
+  return;
+
+  // const basic       = sumCompleted('#basic-curriculum');
+  // const specialized = sumCompleted('#specialized-curriculum');
+
+  // const total = basic + specialized;
+
+  // $('#basic-completed').textContent = `${basic} / 40`;
+
+  // document.querySelector('#specialized-completed').textContent = `${specialized} / 84`;
+  // document.querySelector('#total-completed').textContent = `${total} / 124`;
+  // document.querySelector('#in-progress-count').textContent = `${countInProgress()}科目`;
 }
 
 function resetState() {
