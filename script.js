@@ -127,120 +127,120 @@ function csvToGroupedMap(csv, keyName, convert = {}) {
 // Master data
 // ---------------------------------------------------------------------------
 // Human-managed source. Keep IDs stable and never reuse a removed ID.
-const courseCsv = `id,name,term,year,credits,category
-1,建学の精神と人生,前期,1,2,基礎総合科目
-2,宗教学,後期,1,2,基礎総合科目
-3,心理学,前期,1,2,基礎総合科目
-4,文学,前期,1,2,基礎総合科目
-5,情報倫理,後期,1,2,基礎総合科目
-6,法学,前期,1,2,基礎総合科目
-7,日本国憲法,後期,1,2,基礎総合科目
-8,社会学,後期,1,2,基礎総合科目
-9,政治学,後期,1,2,基礎総合科目
-10,経済学,前期,1,2,基礎総合科目
-11,日本事情,前期,1,2,基礎総合科目
-12,基礎数学,前期,1,2,基礎総合科目
-13,ウェルネス,前期,1,1,基礎総合科目
-14,スポーツ理論,前期,2,2,基礎総合科目
-15,ウェルネス理論,後期,2,2,基礎総合科目
-16,総合英語,前期,1,2,基礎総合科目
-17,英検中級・TOEIC基礎,後期,1,2,基礎総合科目
-18,英会話Basic I,前期,1,2,基礎総合科目
-19,英会話Basic II,後期,1,2,基礎総合科目
-20,英会話Advanced I,前期,2,2,基礎総合科目
-21,英会話Advanced II,後期,2,2,基礎総合科目
-22,初級中国語,前期,2,2,基礎総合科目
-23,中級中国語,後期,2,2,基礎総合科目
-24,初級韓国語,前期,2,2,基礎総合科目
-25,中級韓国語,後期,2,2,基礎総合科目
-26,日本語 I,前期,1,2,基礎総合科目
-27,日本語 II,後期,1,2,基礎総合科目
-28,日本語 III,前期,2,2,基礎総合科目
-29,日本語 IV,後期,2,2,基礎総合科目
-30,情報リテラシー演習 I,前期,1,2,基礎総合科目
-31,情報リテラシー演習 II,後期,1,2,基礎総合科目
-32,スタディスキル,前期,1,2,基礎総合科目
-33,ラーニングリテラシー,前期,1,1,基礎総合科目
-34,キャリアデザイン I,前期,1,2,基礎総合科目
-35,キャリアデザイン II,後期,1,2,基礎総合科目
-36,インターンシップ実習,通年,1-4,2,基礎総合科目
-37,キャリアデザイン III,前期,2,2,基礎総合科目
-38,キャリアデザイン IV,後期,2,2,基礎総合科目
-39,キャリアデザイン V,前期,3,2,基礎総合科目
-40,キャリアデザイン VI,後期,3,2,基礎総合科目
-41,情報学入門,前期,1,2,専門教育科目
-42,情報数学 I,後期,1,2,専門教育科目
-43,情報ネットワーク入門,後期,1,2,専門教育科目
-44,コンピュータ実務演習 I,前期,1,2,専門教育科目
-45,コンピュータ実務演習 II,後期,1,2,専門教育科目
-46,統計学入門,前期,2,2,専門教育科目
-47,情報セキュリティ,前期,3,2,専門教育科目
-48,情報システムの開発と管理,前期,3,2,専門教育科目
-49,マルチメディア論,前期,3,2,専門教育科目
-50,経営学総論 I,前期,1,2,専門教育科目
-51,簿記 I,前期,1,2,専門教育科目
-52,簿記 II,後期,1,2,専門教育科目
-53,マネージメント科学,前期,2,2,専門教育科目
-54,ビジネス実務,前期,2,2,専門教育科目
-55,民事法,前期,2,2,専門教育科目
-56,経営情報学 I,前期,2,2,専門教育科目
-57,経営情報学 II,後期,3,2,専門教育科目
-58,計算機システム論,後期,1,2,専門教育科目
-59,プログラミング初歩 I,前期,1,2,専門教育科目
-60,プログラミング初歩 II,後期,1,2,専門教育科目
-61,プログラミング実践 I,前期,2,4,専門教育科目
-62,プログラミング実践 II,後期,2,4,専門教育科目
-63,ゲームプログラミング,前期,2,2,専門教育科目
-64,eスポーツ概論,後期,2,2,専門教育科目
-65,情報処理技術演習 I,前期,2,2,専門教育科目
-66,情報処理技術演習 II,後期,2,2,専門教育科目
-67,アルゴリズムとデータ構造,前期,2,2,専門教育科目
-68,情報数学 II,前期,2,2,専門教育科目
-69,データベース論,前期,2,2,専門教育科目
-70,オペレーティングシステム論,後期,2,2,専門教育科目
-71,計測・制御論,後期,3,2,専門教育科目
-72,モバイルネットワーク,前期,3,2,専門教育科目
-73,情報処理技術演習 III,前期,3,2,専門教育科目
-74,情報処理技術演習 IV,後期,3,2,専門教育科目
-75,会計学,前期,1,2,専門教育科目
-76,コマース論,前期,2,2,専門教育科目
-77,経営組織論,後期,2,2,専門教育科目
-78,コンピュータ会計,後期,2,2,専門教育科目
-79,知的財産権,前期,3,2,専門教育科目
-80,Webデザイン,後期,1,2,専門教育科目
-81,スイッチング技術,前期,2,2,専門教育科目
-82,ルーティング技術,後期,2,2,専門教育科目
-83,SNS活用と問題解決,後期,2,2,専門教育科目
-84,デジタルビジネス論,後期,2,2,専門教育科目
-85,Webシステム,前期,2,2,専門教育科目
-86,Webプログラミング I,後期,2,2,専門教育科目
-87,Webプログラミング II,前期,3,2,専門教育科目
-88,Webプログラミング III,後期,3,2,専門教育科目
-89,ネットワークアプリケーション構築,通年,3,4,専門教育科目
-90,インターネット技術,前期,3,2,専門教育科目
-91,マーケティング論,前期,1,2,専門教育科目
-92,消費者行動論,後期,1,2,専門教育科目
-93,経営分析,前期,2,2,専門教育科目
-94,統計学,後期,2,2,専門教育科目
-95,ビジネスプログラミング,前期,2,2,専門教育科目
-96,多変量解析,前期,3,2,専門教育科目
-97,データ解析,後期,3,2,専門教育科目
-98,データモデリング,後期,3,2,専門教育科目
-99,統計プログラミング,後期,3,2,専門教育科目
-100,機械学習,後期,3,2,専門教育科目
-101,人工知能,後期,3,2,専門教育科目
-102,英検上級 I・TOEIC応用 I,前期,2,2,専門教育科目
-103,英検上級 II・TOEIC応用 II,後期,2,2,専門教育科目
-104,ビジネス英語,後期,3,2,専門教育科目
-105,プレゼミ I,前期,1,2,専門教育科目
-106,プレゼミ II,後期,1,2,専門教育科目
-107,基礎ゼミ,通年,2,4,専門教育科目
-108,情報学基礎演習,通年,2,4,専門教育科目
-109,専門ゼミ I,通年,3,4,専門教育科目
-110,情報学専門演習 I,通年,3,4,専門教育科目
-111,専門ゼミ II,通年,4,4,専門教育科目
-112,情報学専門演習 II,通年,4,4,専門教育科目
-113,スポーツ,後期,1,1,基礎総合科目
+const courseCsv = `id,name,term,year,credits,category,middle
+1,建学の精神と人生,前期,1,2,基礎総合科目,総合教養,
+2,宗教学,後期,1,2,基礎総合科目,総合教養
+3,心理学,前期,1,2,基礎総合科目,総合教養
+4,文学,前期,1,2,基礎総合科目,総合教養
+5,情報倫理,後期,1,2,基礎総合科目,総合教養
+6,法学,前期,1,2,基礎総合科目,総合教養
+7,日本国憲法,後期,1,2,基礎総合科目,総合教養
+8,社会学,後期,1,2,基礎総合科目,総合教養
+9,政治学,後期,1,2,基礎総合科目,総合教養
+10,経済学,前期,1,2,基礎総合科目,総合教養
+11,日本事情,前期,1,2,基礎総合科目,総合教養
+12,基礎数学,前期,1,2,基礎総合科目,総合教養
+13,ウェルネス,前期,1,1,基礎総合科目,総合教養
+14,スポーツ理論,前期,2,2,基礎総合科目,総合教養
+15,ウェルネス理論,後期,2,2,基礎総合科目,総合教養
+16,総合英語,前期,1,2,基礎総合科目,総合語学
+17,英検中級・TOEIC基礎,後期,1,2,基礎総合科目,総合語学
+18,英会話Basic I,前期,1,2,基礎総合科目,総合語学
+19,英会話Basic II,後期,1,2,基礎総合科目,総合語学
+20,英会話Advanced I,前期,2,2,基礎総合科目,総合語学
+21,英会話Advanced II,後期,2,2,基礎総合科目,総合語学
+22,初級中国語,前期,2,2,基礎総合科目,総合語学
+23,中級中国語,後期,2,2,基礎総合科目,総合語学
+24,初級韓国語,前期,2,2,基礎総合科目,総合語学
+25,中級韓国語,後期,2,2,基礎総合科目,総合語学
+26,日本語 I,前期,1,2,基礎総合科目,総合語学
+27,日本語 II,後期,1,2,基礎総合科目,総合語学
+28,日本語 III,前期,2,2,基礎総合科目,総合語学
+29,日本語 IV,後期,2,2,基礎総合科目,総合語学
+30,情報リテラシー演習 I,前期,1,2,基礎総合科目,実践力養成・キャリア開発
+31,情報リテラシー演習 II,後期,1,2,基礎総合科目,実践力養成・キャリア開発
+32,スタディスキル,前期,1,2,基礎総合科目,実践力養成・キャリア開発
+33,ラーニングリテラシー,前期,1,1,基礎総合科目,実践力養成・キャリア開発
+34,キャリアデザイン I,前期,1,2,基礎総合科目,実践力養成・キャリア開発
+35,キャリアデザイン II,後期,1,2,基礎総合科目,実践力養成・キャリア開発
+36,インターンシップ実習,通年期,1-4,2,基礎総合科目,実践力養成・キャリア開発
+37,キャリアデザイン III,前期,2,2,基礎総合科目,実践力養成・キャリア開発
+38,キャリアデザイン IV,後期,2,2,基礎総合科目,実践力養成・キャリア開発
+39,キャリアデザイン V,前期,3,2,基礎総合科目,実践力養成・キャリア開発
+40,キャリアデザイン VI,後期,3,2,基礎総合科目,実践力養成・キャリア開発
+41,情報学入門,前期,1,2,専門教育科目,専門基礎
+42,情報数学 I,後期,1,2,専門教育科目,専門基礎
+43,情報ネットワーク入門,後期,1,2,専門教育科目,専門基礎
+44,コンピュータ実務演習 I,前期,1,2,専門教育科目,専門基礎
+45,コンピュータ実務演習 II,後期,1,2,専門教育科目,専門基礎
+46,統計学入門,前期,2,2,専門教育科目,専門基礎
+47,情報セキュリティ,前期,3,2,専門教育科目,専門基礎
+48,情報システムの開発と管理,前期,3,2,専門教育科目,専門基礎
+49,マルチメディア論,前期,3,2,専門教育科目,専門基礎
+50,経営学総論 I,前期,1,2,専門教育科目,専門基礎
+51,簿記 I,前期,1,2,専門教育科目,専門基礎
+52,簿記 II,後期,1,2,専門教育科目,専門基礎
+53,マネージメント科学,前期,2,2,専門教育科目,専門基礎
+54,ビジネス実務,前期,2,2,専門教育科目,専門基礎
+55,民事法,前期,2,2,専門教育科目,専門基礎
+56,経営情報学 I,前期,2,2,専門教育科目,専門基礎
+57,経営情報学 II,後期,3,2,専門教育科目,専門基礎
+58,計算機システム論,後期,1,2,専門教育科目,専門発展
+59,プログラミング初歩 I,前期,1,2,専門教育科目,専門発展
+60,プログラミング初歩 II,後期,1,2,専門教育科目,専門発展
+61,プログラミング実践 I,前期,2,4,専門教育科目,専門発展
+62,プログラミング実践 II,後期,2,4,専門教育科目,専門発展
+63,ゲームプログラミング,前期,2,2,専門教育科目,専門発展
+64,eスポーツ概論,後期,2,2,専門教育科目,専門発展
+65,情報処理技術演習 I,前期,2,2,専門教育科目,専門発展
+66,情報処理技術演習 II,後期,2,2,専門教育科目,専門発展
+67,アルゴリズムとデータ構造,前期,2,2,専門教育科目,専門発展
+68,情報数学 II,前期,2,2,専門教育科目,専門発展
+69,データベース論,前期,2,2,専門教育科目,専門発展
+70,オペレーティングシステム論,後期,2,2,専門教育科目,専門発展
+71,計測・制御論,後期,3,2,専門教育科目,専門発展
+72,モバイルネットワーク,前期,3,2,専門教育科目,専門発展
+73,情報処理技術演習 III,前期,3,2,専門教育科目,専門発展
+74,情報処理技術演習 IV,後期,3,2,専門教育科目,専門発展
+75,会計学,前期,1,2,専門教育科目,専門発展
+76,コマース論,前期,2,2,専門教育科目,専門発展
+77,経営組織論,後期,2,2,専門教育科目,専門発展
+78,コンピュータ会計,後期,2,2,専門教育科目,専門発展
+79,知的財産権,前期,3,2,専門教育科目,専門発展
+80,Webデザイン,後期,1,2,専門教育科目,専門応用
+81,スイッチング技術,前期,2,2,専門教育科目,専門応用
+82,ルーティング技術,後期,2,2,専門教育科目,専門応用
+83,SNS活用と問題解決,後期,2,2,専門教育科目,専門応用
+84,デジタルビジネス論,後期,2,2,専門教育科目,専門応用
+85,Webシステム,前期,2,2,専門教育科目,専門応用
+86,Webプログラミング I,後期,2,2,専門教育科目,専門応用
+87,Webプログラミング II,前期,3,2,専門教育科目,専門応用
+88,Webプログラミング III,後期,3,2,専門教育科目,専門応用
+89,ネットワークアプリケーション構築,通年期,3,4,専門教育科目,専門応用
+90,インターネット技術,前期,3,2,専門教育科目,専門応用
+91,マーケティング論,前期,1,2,専門教育科目,専門応用
+92,消費者行動論,後期,1,2,専門教育科目,専門応用
+93,経営分析,前期,2,2,専門教育科目,専門応用
+94,統計学,後期,2,2,専門教育科目,専門応用
+95,ビジネスプログラミング,前期,2,2,専門教育科目,専門応用
+96,多変量解析,前期,3,2,専門教育科目,専門応用
+97,データ解析,後期,3,2,専門教育科目,専門応用
+98,データモデリング,後期,3,2,専門教育科目,専門応用
+99,統計プログラミング,後期,3,2,専門教育科目,専門応用
+100,機械学習,後期,3,2,専門教育科目,専門応用
+101,人工知能,後期,3,2,専門教育科目,専門応用
+102,英検上級 I・TOEIC応用 I,前期,2,2,専門教育科目,専門応用
+103,英検上級 II・TOEIC応用 II,後期,2,2,専門教育科目,専門応用
+104,ビジネス英語,後期,3,2,専門教育科目,専門応用
+105,プレゼミ I,前期,1,2,専門教育科目,演習
+106,プレゼミ II,後期,1,2,専門教育科目,演習
+107,基礎ゼミ,通年,2,4,専門教育科目,演習
+108,情報学基礎演習,通年,2,4,専門教育科目,演習
+109,専門ゼミ I,通年,3,4,専門教育科目,演習
+110,情報学専門演習 I,通年,3,4,専門教育科目,演習
+111,専門ゼミ II,通年,4,4,専門教育科目,演習
+112,情報学専門演習 II,通年,4,4,専門教育科目,演習
+113,スポーツ,後期,1,1,基礎総合科目,総合教養
 `;
 
 // SAMPLE ONLY: replace with the actual institutional mapping.
@@ -260,14 +260,22 @@ const creditsListCsv = `credit_name,credit_id,credit_limit
 専門基礎,specialized_basic-completed,20
 専門発展,specialized_advanced-completed,14
 専門応用,specialized_applied-completed,24
-履修中,in-progress-count,-1
+履修中,in-progress-count,0
 `;
 
-const courseDb = csvToMap(courseCsv, 'id', { credits: Number });
+// const courseDb = csvToMap(courseCsv, 'id', { credits: Number });
+const courseDb = csvToMap(courseCsv, 'id', { year: Number, credits: Number });
 
 const certificationDb = csvToGroupedMap(certCsv, 'cert_id', { course_id: String });
 
 const creditsSummaryDb = csvToMap(creditsListCsv, 'credit_id', { credit_limit: Number });
+
+// ---------------------------------------------------------------------------
+// SELECT 再現
+// ---------------------------------------------------------------------------
+function SELECT(...columns) {
+  return [...courseDb.values()].map(e=>columns.map(column => e[column]))
+}
 
 // ---------------------------------------------------------------------------
 // User state
@@ -280,16 +288,11 @@ function loadState() {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
 
     return new Map(
-      Object.entries(saved).map(([id, state]) => [
-        String(id),
-        state
-      ])
+      Object.entries(saved)
+        .map(([id, state]) => [String(id), state])
     );
   } catch (error) {
-    console.warn(
-      'Failed to load user state; starting empty.',
-      error
-    );
+    console.warn('Failed to load user state; starting empty.', error);
 
     return new Map();
   }
@@ -334,46 +337,21 @@ function initializeCourses() {
   document
     .querySelectorAll('.course[data-course-id]')
     .forEach(element => {
-      const courseId =
-        String(element.dataset.courseId);
+      const courseId = String(element.dataset.courseId);
 
-      const course =
-        courseDb.get(courseId);
+      const course = courseDb.get(courseId);
 
       if (!course) {
         element.classList.add('data-error');
-        element.textContent =
-          `未登録ID: ${courseId}`;
+        element.textContent = `未登録ID: ${courseId}`;
         return;
       }
 
       element.replaceChildren(
-        Object.assign(
-          document.createElement('span'),
-          {
-            className: 'course-name',
-            textContent: course.name
-          }
-        ),
-        Object.assign(
-          document.createElement('span'),
-          {
-            className: 'course-term',
-            textContent: `(${course.term})`
-          }
-        ),
-        Object.assign(
-          document.createElement('span'),
-          {
-            className: 'course-credits',
-            textContent:
-              course.credits
-                ? `${course.credits}`
-                // ? `${course.credits}単位`
-                : ''
-          }
-        )
-      );
+        create("span", course.name,        {classList: "course-name"}),
+        create("span", `(${course.term})`, {classList: "course-term"}),
+        create("span", course.credits ? `${course.credits}` : '', {classList: "course-credits"}),
+      )
 
       element.setAttribute(
         'aria-label',
@@ -391,10 +369,7 @@ function initializeCourses() {
       element.addEventListener(
         'keydown',
         event => {
-          if (
-            event.key === 'Enter' ||
-            event.key === ' '
-          ) {
+          if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
             cycleStatus(courseId);
           }
@@ -409,8 +384,7 @@ function renderCourseStatuses() {
   document
     .querySelectorAll('.course[data-course-id]')
     .forEach(element => {
-      const id =
-        String(element.dataset.courseId);
+      const id = String(element.dataset.courseId);
 
       const status = getStatus(id);
 
@@ -421,23 +395,17 @@ function renderCourseStatuses() {
       );
 
       if (status === 'in-progress') {
-        element.classList.add(
-          'status-in-progress'
-        );
+        element.classList.add('status-in-progress');
       }
 
       if (status === 'completed') {
-        element.classList.add(
-          'status-completed'
-        );
+        element.classList.add('status-completed');
       }
 
       // Planned is available as a class for future UI use,
       // but not used in the 3-step click cycle.
       if (status === 'planned') {
-        element.classList.add(
-          'status-planned'
-        );
+        element.classList.add('status-planned');
       }
 
       element.dataset.status = status;
@@ -449,35 +417,27 @@ function renderCourseStatuses() {
 // ---------------------------------------------------------------------------
 function getCertificationCourses(certId) {
   return new Set(
-    (certificationDb.get(certId) || [])
-      .map(row => row.course_id)
+    (certificationDb.get(certId) || []).map(row => row.course_id)
   );
 }
 
 function applyCertificationHighlight(certId) {
-  const ids =
-    getCertificationCourses(certId);
+  const ids = getCertificationCourses(certId);
 
   document
     .querySelectorAll('.course[data-course-id]')
     .forEach(element => {
-      const id =
-        String(element.dataset.courseId);
+      const id = String(element.dataset.courseId);
 
-      element.classList.toggle(
-        'cert-highlight',
-        ids.has(id)
-      );
+      element.classList.toggle('cert-highlight', ids.has(id));
     });
 }
 
 function populateCertificationSelect() {
-  const select =
-    document.querySelector('#cert-select');
+  const select = document.querySelector('#cert-select');
 
   for (const [certId, rows] of certificationDb) {
-    const option =
-      document.createElement('option');
+    const option = document.createElement('option');
 
     option.value = certId;
 
@@ -491,10 +451,7 @@ function populateCertificationSelect() {
 
   select.addEventListener(
     'change',
-    event =>
-      applyCertificationHighlight(
-        event.target.value
-      )
+    event => applyCertificationHighlight(event.target.value)
   );
 
   document
@@ -512,19 +469,6 @@ function populateCertificationSelect() {
 // Credits / summary
 // ---------------------------------------------------------------------------
 function initializeSummary() {
-//   const creditsListCsv =
-// // credit_id,credit_name,credit_limit
-// `総修得,total-completed,124
-// 基礎総合,basic-completed,40
-// 総合教養,generalEducation-completed,12
-// 総合語学,language-completed,6
-// 実践力養成・キャリア開発,careerAndSkills-completed,12
-// 専門教育科目,specialized-completed,84
-// 専門基礎,specialized_basic-completed,20
-// 専門発展,specialized_advanced-completed,14
-// 専門応用,specialized_applied-completed,24
-// 履修中,in-progress-count,-1
-// `;
   const parent = document.querySelector(".summary-grid");
 
   creditsSummaryDb.forEach(e => {
@@ -535,35 +479,23 @@ function initializeSummary() {
     const div = create("div", null, {classList: "summary-card"});
     const span = create("span", credit_name);
     const strong = create("strong", "0", {id: credit_id});
+    const values = create("div", [strong, credit_limit ? ` / ${credit_limit}` : " 科目"]);
 
     div.append(span);
-    div.append(strong);
+    div.append(values);
 
     parent.append(div);
   })
-
 }
 
 function sumCompleted(panelSelector) {
   let sum = 0;
 
-  document
-    .querySelectorAll(
-      `${panelSelector} .course[data-course-id]`
-    )
+  document.querySelectorAll(`${panelSelector} .course[data-course-id]`)
     .forEach(element => {
-      if (
-        getStatus(
-          String(element.dataset.courseId)
-        ) !== 'completed'
-      ) {
-        return;
-      }
+      if (getStatus(String(element.dataset.courseId)) !== 'completed') return;
 
-      const course =
-        courseDb.get(
-          String(element.dataset.courseId)
-        );
+      const course = courseDb.get(String(element.dataset.courseId));
 
       sum += course?.credits || 0;
     });
@@ -577,47 +509,28 @@ function countInProgress() {
   document
     .querySelectorAll('.course[data-course-id]')
     .forEach(element => {
-      if (
-        getStatus(
-          String(element.dataset.courseId)
-        ) === 'in-progress'
-      ) {
-        count++;
-      }
+      if (getStatus(String(element.dataset.courseId)) === 'in-progress') count++;
     });
 
   return count;
 }
 
 function updateSummary() {
-  const basic =
-    sumCompleted('#basic-curriculum');
+  const idAndMiddle = SELECT("id", "middle");
+  console.log(idAndMiddle)
 
-  const specialized =
-    sumCompleted('#specialized-curriculum');
 
-  const total =
-    basic + specialized;
 
-  document.querySelector(
-    '#basic-completed'
-  ).textContent =
-    `${basic} / 40`;
+  const basic       = sumCompleted('#basic-curriculum');
+  const specialized = sumCompleted('#specialized-curriculum');
 
-  document.querySelector(
-    '#specialized-completed'
-  ).textContent =
-    `${specialized} / 84`;
+  const total = basic + specialized;
 
-  document.querySelector(
-    '#total-completed'
-  ).textContent =
-    `${total} / 124`;
+  $('#basic-completed').textContent = `${basic} / 40`;
 
-  document.querySelector(
-    '#in-progress-count'
-  ).textContent =
-    `${countInProgress()}科目`;
+  document.querySelector('#specialized-completed').textContent = `${specialized} / 84`;
+  document.querySelector('#total-completed').textContent = `${total} / 124`;
+  document.querySelector('#in-progress-count').textContent = `${countInProgress()}科目`;
 }
 
 function resetState() {
