@@ -235,3 +235,11 @@ button, select { font: inherit; }
   .curriculum-container { display: block; min-width: 1180px; width: max-content; }
   .curriculum-panel + .curriculum-panel { margin-top: 18px; }
 }
+
+progress {
+  /* -webkit-appearance: none; */
+  /* border-radius: 1em; */
+}
+::-webkit-progress-value {
+  background-color: blue;
+}

@@ -496,13 +496,21 @@ function initializeSummary() {
     const credit_name = e["credit_name"]
     const credit_limit = e["credit_limit"];
 
-    const div = create("div", null, {classList: "summary-card"});
+    const div = create("div", null, {classList: "summary-card", id: credit_id});
+
     const span = create("span", credit_name);
-    const strong = create("strong", "0", {id: credit_id});
-    const values = create("div", [strong, credit_limit ? ` / ${credit_limit}` : " 科目"]);
+    const values = create("div", [
+      create("strong", "0", {id: credit_id}),
+      credit_limit ? ` / ${credit_limit}` : " 科目"
+    ]);
+    const progressDiff = create("span", [
+      create("progress", null, {max: credit_limit, value: 0}),
+      create("span", null, { classList: "diff" }),
+    ]);
 
     div.append(span);
     div.append(values);
+    if(credit_id != "in_progress_count") div.append(progressDiff);
 
     parent.append(div);
   })
@@ -610,20 +618,55 @@ console.log(summarys)
 
   const total = basic + specialized;
 
-  $("#generalEducation_completed").textContent = generalEducation;
-  $("#language_completed").textContent = language;
-  $("#careerAndSkills_completed").textContent = careerAndSkills;
+  // ----> value <----
+  $("#generalEducation_completed strong").textContent = generalEducation;
+  $("#language_completed strong").textContent         = language;
+  $("#careerAndSkills_completed strong").textContent  = careerAndSkills;
 
-  $("#specialized_basic_completed").textContent = specialized_basic;
-  $("#specialized_advanced_completed").textContent = specialized_advanced;
-  $("#specialized_applied_completed").textContent = specialized_applied;
+  $("#specialized_basic_completed strong").textContent    = specialized_basic;
+  $("#specialized_advanced_completed strong").textContent = specialized_advanced;
+  $("#specialized_applied_completed strong").textContent  = specialized_applied;
 
-  $("#in_progress_count").textContent = in_progress_count;
+  $("#in_progress_count strong").textContent = in_progress_count;
 
-  $("#basic_completed").textContent = basic;
-  $("#specialized_completed").textContent = specialized;
+  $("#basic_completed strong").textContent       = basic;
+  $("#specialized_completed strong").textContent = specialized;
 
-  $("#total_completed").textContent = total;
+  $("#total_completed strong").textContent = total;
+
+  // ----> progress <----
+  $("#generalEducation_completed progress").value = generalEducation;
+  $("#language_completed progress").value         = language;
+  $("#careerAndSkills_completed progress").value  = careerAndSkills;
+
+  $("#specialized_basic_completed progress").value    = specialized_basic;
+  $("#specialized_advanced_completed progress").value = specialized_advanced;
+  $("#specialized_applied_completed progress").value  = specialized_applied;
+
+  // $("#in_progress_count progress").value = in_progress_count;
+
+  $("#basic_completed progress").value       = basic;
+  $("#specialized_completed progress").value = specialized;
+
+  $("#total_completed progress").value = total;
+
+  // ----> diff <----
+  const limitList = SELECT(creditsSummaryDb, "credit_id", "credit_limit")
+
+  $("#generalEducation_completed .diff").textContent = generalEducation - limitList.find(e=>e[0]=="generalEducation_completed")[1];
+  $("#language_completed .diff").textContent         = language - limitList.find(e=>e[0]=="language_completed")[1];
+  $("#careerAndSkills_completed .diff").textContent  = careerAndSkills - limitList.find(e=>e[0]=="careerAndSkills_completed")[1];
+
+  $("#specialized_basic_completed .diff").textContent    = specialized_basic - limitList.find(e=>e[0]=="specialized_basic_completed")[1];
+  $("#specialized_advanced_completed .diff").textContent = specialized_advanced - limitList.find(e=>e[0]=="specialized_advanced_completed")[1];
+  $("#specialized_applied_completed .diff").textContent  = specialized_applied - limitList.find(e=>e[0]=="specialized_applied_completed")[1];
+
+  // $("#in_progress_count .diff").textContent = in_progress_count - limitList.find(e=>e[0]=="in_progress_count")[1];
+
+  $("#basic_completed .diff").textContent       = basic - limitList.find(e=>e[0]=="basic_completed")[1];
+  $("#specialized_completed .diff").textContent = specialized - limitList.find(e=>e[0]=="specialized_completed")[1];
+
+  $("#total_completed .diff").textContent = total - limitList.find(e=>e[0]=="total_completed")[1];
 
   return;
 
