@@ -246,10 +246,31 @@ const courseCsv = `id,name,term,year,credits,category,middle
 
 // SAMPLE ONLY: replace with the actual institutional mapping.
 const certCsv = `cert_id,cert_name,course_id
-FE,基本情報技術者,2
-FE,基本情報技術者,3
+FE,基本情報技術者,60
+FE,基本情報技術者,61
+FE,基本情報技術者,62
+FE,基本情報技術者,67
+FE,基本情報技術者,70
+FE,基本情報技術者,73
+FE,基本情報技術者,74
 AP,応用情報技術者,2
 `;
+
+// console.log(
+//   SELECT(courseDb, "id", "name")
+//     .filter(e=>[
+//       "オペレーティングシステム論",
+//       "プログラミング実践 I",
+//       "プログラミング実践 II",
+//       "計算機システム論",
+//       "アルゴリズムとデータ構造",
+//       "情報処理技術演習 III",
+//       "情報処理技術演習 IV"
+//     ].includes(e[1]))
+//     .map(e=>e[0])
+//     .map(e=>"FE,基本情報技術者,"+e)
+//     .join("\n")
+// );
 
 const creditsListCsv = `credit_name,credit_id,credit_limit
 総修得,total_completed,124
