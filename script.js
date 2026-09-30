@@ -602,7 +602,8 @@ console.log(summarys)
   const specialized_advanced = sumCompleted2("specialized_advanced_completed");
   const specialized_applied  = sumCompleted2("specialized_applied_completed");
 
-  const in_progress_count    = sumCompleted2("in_progress_count");
+  // const in_progress_count    = sumCompleted2("in_progress_count");
+  const in_progress_count    = countInProgress();
 
   const basic       = generalEducation + language + careerAndSkills;
   const specialized = specialized_basic + specialized_advanced + specialized_applied;
