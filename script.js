@@ -317,6 +317,11 @@ function WHEREcreditsList(equals) {
   return creditsListCsv.split("\n").map(e=>e.split(",")).find(e=>e.includes(equals))
 }
 
+// 使用例
+// SELECTandWHERE(courseDb, ([id, middle])=>middle == "総合教養", "id", "middle")
+function SELECTandWHERE(DB, condition, ...columns) {
+  return SELECT(DB, ...columns).filter(condition);
+}
 
 // ---------------------------------------------------------------------------
 // User state
