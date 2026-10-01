@@ -593,17 +593,19 @@ function createSummaryCard(e) {
 function initializeSummary() {
   const parent = document.querySelector(".summary-grid");
 
-  // 総修得、基礎総合科目、専門教育科目 を先に追加
+  const addFirst = ["総修得","基礎総合科目", "専門教育科目", "履修中"]
+
+  // 総修得、基礎総合科目、専門教育科目、履修中 を先に追加
   creditsSummaryDb.forEach(e => {
-    if(!["総修得","基礎総合科目", "専門教育科目"].includes(e["credit_name"])) return;
+    if(!addFirst.includes(e["credit_name"])) return;
 
     const card = createSummaryCard(e);
     parent.append(card);
   });
 
-  // 総修得、基礎総合科目、専門教育科目 以外を後から追加
+  // 総修得、基礎総合科目、専門教育科目、履修中 以外を後から追加
   creditsSummaryDb.forEach(e => {
-    if(["総修得","基礎総合科目", "専門教育科目"].includes(e["credit_name"])) return;
+    if(addFirst.includes(e["credit_name"])) return;
 
     const card = createSummaryCard(e);
     parent.append(card);
