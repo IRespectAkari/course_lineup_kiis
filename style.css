@@ -236,10 +236,34 @@ button, select { font: inherit; }
   .curriculum-panel + .curriculum-panel { margin-top: 18px; }
 }
 
-progress {
-  /* -webkit-appearance: none; */
-  /* border-radius: 1em; */
+/* プログレスバーの拡張 */
+.credit-progress {
+  --earned-percent: calc(var(--earned) / var(--required) * 100%);
+  --in-progress-percent: calc(var(--in-progress) / var(--required) * 100%);
+
+  width: 100%;
+  height: 10px;
+
+  overflow: hidden;
+
+  background: #e5e7eb;
+  border-radius: 999px;
 }
-::-webkit-progress-value {
-  background-color: blue;
+
+.credit-progress__bar {
+  width: 100%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      to right,
+    #3b82f6 0%,
+    #3b82f6 var(--earned-percent),
+
+    #f59e0b var(--earned-percent),
+    #f59e0b calc( var(--earned-percent) + var(--in-progress-percent) ),
+
+    #e5e7eb calc( var(--earned-percent) + var(--in-progress-percent) ),
+    #e5e7eb 100%
+  );
 }
