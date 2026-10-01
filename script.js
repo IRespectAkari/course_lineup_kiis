@@ -517,13 +517,11 @@ function getCertificationCourses(certId) {
 function applyCertificationHighlight(certId) {
   const ids = getCertificationCourses(certId);
 
-  document
-    .querySelectorAll('.course[data-course-id]')
-    .forEach(element => {
-      const id = String(element.dataset.courseId);
+  $$('.course[data-course-id]').forEach(element => {
+    const id = String(element.dataset.courseId);
 
-      element.classList.toggle('cert-highlight', ids.has(id));
-    });
+    element.classList.toggle('cert-highlight', ids.has(id));
+  });
 }
 
 function populateCertificationSelect() {
