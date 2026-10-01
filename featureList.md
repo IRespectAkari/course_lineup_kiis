@@ -2,12 +2,12 @@
 
 1. summaryのプログレスバーに、履修中の項目も足したい（オレンジとかで足して、履修中の単位が取れたときに届くのか判別できるようにしたい）
 2. 資格単位認定
-  1. ITパスポート
-  2. CCNA
-  3. Microsoft Office Specialist
+  1. ITpass,ITパスポート
+  2. CCNA,CCNA
+  3. MOS,Microsoft Office Specialist
   4. 実用英語技能検定 準1級以上
-  5. TOEFL 71点以上
-  6. TOEIC 750点以上
+  5. TOEFL,TOEFL 71点以上
+  6. TOEIC,TOEIC 750点以上
   7. 実用英語技能検定 2級以上
   8. 日本漢字能力検定 2級以上
   9. 日本語能力試験 N1
