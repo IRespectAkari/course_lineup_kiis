@@ -321,7 +321,7 @@ MDASH_A,応用基礎レベル,101
 
 const creditsListCsv = `credit_name,credit_id,credit_limit
 総修得,total_completed,124
-基礎総合,basic_completed,40
+基礎総合科目,basic_completed,40
 総合教養,generalEducation_completed,12
 総合語学,language_completed,6
 実践力養成・キャリア開発,careerAndSkills_completed,12
@@ -566,32 +566,48 @@ function populateCertificationSelect() {
 // ---------------------------------------------------------------------------
 // Credits / summary
 // ---------------------------------------------------------------------------
+function createSummaryCard(e) {
+  const credit_id = e["credit_id"];
+  const credit_name = e["credit_name"]
+  const credit_limit = e["credit_limit"];
+
+  const div = create("div", null, {classList: "summary-card", id: credit_id});
+
+  const span = create("span", credit_name);
+  const values = create("div", [
+    create("strong", "0", {id: credit_id}),
+    credit_limit ? ` / ${credit_limit}` : " 科目"
+  ]);
+  const progressDiff = create("span", [
+    create("progress", null, {max: credit_limit, value: 0}),
+    create("span", null, { classList: "diff" }),
+  ]);
+
+  div.append(span);
+  div.append(values);
+  if(credit_id != "in_progress_count") div.append(progressDiff);
+
+  return div;
+}
+
 function initializeSummary() {
   const parent = document.querySelector(".summary-grid");
 
+  // 総修得、基礎総合科目、専門教育科目 を先に追加
   creditsSummaryDb.forEach(e => {
-    const credit_id = e["credit_id"];
-    const credit_name = e["credit_name"]
-    const credit_limit = e["credit_limit"];
+    if(!["総修得","基礎総合科目", "専門教育科目"].includes(e["credit_name"])) return;
 
-    const div = create("div", null, {classList: "summary-card", id: credit_id});
+    const card = createSummaryCard(e);
+    parent.append(card);
+  });
 
-    const span = create("span", credit_name);
-    const values = create("div", [
-      create("strong", "0", {id: credit_id}),
-      credit_limit ? ` / ${credit_limit}` : " 科目"
-    ]);
-    const progressDiff = create("span", [
-      create("progress", null, {max: credit_limit, value: 0}),
-      create("span", null, { classList: "diff" }),
-    ]);
+  // 総修得、基礎総合科目、専門教育科目 以外を後から追加
+  creditsSummaryDb.forEach(e => {
+    if(["総修得","基礎総合科目", "専門教育科目"].includes(e["credit_name"])) return;
 
-    div.append(span);
-    div.append(values);
-    if(credit_id != "in_progress_count") div.append(progressDiff);
-
-    parent.append(div);
-  })
+    const card = createSummaryCard(e);
+    parent.append(card);
+  });
 }
 
 function sumCompleted(panelSelector) {
