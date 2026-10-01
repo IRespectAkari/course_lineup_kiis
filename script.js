@@ -524,26 +524,42 @@ function applyCertificationHighlight(certId) {
   });
 }
 
+function applyCertificationHighlightAll() {
+  const certIds = $$("div#cert-select input:checked").map(elm => elm.value);
+  const ids = certIds
+    .map(getCertificationCourses)
+    .reduce((accumulator, current) => accumulator.union(current), new Set());
+
+  $$('.course[data-course-id]').forEach(element => {
+    const id = String(element.dataset.courseId);
+
+    element.classList.toggle('cert-highlight', ids.has(id));
+  });
+}
+
 function populateCertificationSelect() {
-  const select = $('#cert-select');
+  const div = $('#cert-select');
 
   for (const [certId, rows] of certificationDb) {
 
     const text = rows[0]?.cert_name ? `${rows[0].cert_name} (${certId})` : certId;
 
-    const option = create('option', text, { value: certId });
+    const label = create('label', [
+      create("input", null, {
+        type: "checkbox",
+        events: {click: applyCertificationHighlightAll},
+        value: certId
+      }),
+      text
+    ]);
 
-    select.append(option);
+    div.append(label);
   }
 
-  select.addEventListener(
-    'change',
-    event => applyCertificationHighlight(event.target.value)
-  );
 
-  $('#clear-cert').addEventListener('click',() => {
-    select.value = '';
-    applyCertificationHighlight('');
+  $('#clear-cert').addEventListener('click', () => {
+    $$("div#cert-select input").map(e => e.checked = false);
+    applyCertificationHighlightAll();
   });
 }
 
