@@ -650,6 +650,22 @@ console.log(middle, credits, sum)
   return sum;
 }
 
+function sumSemi() {
+// middle(総合教養)の講義idを取得
+  const middlesID = SELECT(courseDb, "id", "middle")
+    .filter(([id, m]) => m == "演習")// middleName == 総合教養
+    .flatMap(([id, m]) => id);
+
+  const completed = middlesID.filter(id => getStatus(id) == "completed");
+  const credits = SELECT(courseDb, "id", "credits")
+    .filter(([id, c]) => completed.includes(id))
+    .flatMap(([id, c]) => c)
+
+  const sum = credits.reduce((c, a) => c + a, 0);
+// console.log(middle, credits, sum)
+  return sum;
+}
+
 function countInProgress() {
   let count = 0;
 
@@ -687,7 +703,7 @@ console.log(summarys)
   const in_progress_count    = countInProgress();
 
   const basic       = generalEducation + language + careerAndSkills;
-  const specialized = specialized_basic + specialized_advanced + specialized_applied;
+  const specialized = specialized_basic + specialized_advanced + specialized_applied + sumSemi();
 
   const total = basic + specialized;
 
