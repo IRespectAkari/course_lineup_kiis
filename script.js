@@ -527,17 +527,13 @@ function applyCertificationHighlight(certId) {
 }
 
 function populateCertificationSelect() {
-  const select = document.querySelector('#cert-select');
+  const select = $('#cert-select');
 
   for (const [certId, rows] of certificationDb) {
-    const option = document.createElement('option');
 
-    option.value = certId;
+    const text = rows[0]?.cert_name ? `${rows[0].cert_name} (${certId})` : certId;
 
-    option.textContent =
-      rows[0]?.cert_name
-        ? `${rows[0].cert_name} (${certId})`
-        : certId;
+    const option = create('option', text, { value: certId });
 
     select.append(option);
   }
@@ -547,15 +543,10 @@ function populateCertificationSelect() {
     event => applyCertificationHighlight(event.target.value)
   );
 
-  document
-    .querySelector('#clear-cert')
-    .addEventListener(
-      'click',
-      () => {
-        select.value = '';
-        applyCertificationHighlight('');
-      }
-    );
+  $('#clear-cert').addEventListener('click',() => {
+    select.value = '';
+    applyCertificationHighlight('');
+  });
 }
 
 // ---------------------------------------------------------------------------
