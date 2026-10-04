@@ -591,7 +591,9 @@ function createSummaryCard(e) {
 }
 
 function initializeSummary() {
-  const parent = document.querySelector(".summary-grid");
+  // const parent = document.querySelector(".summary-grid");
+  const parent_general  = $(".summary-grid > #summary-general");
+  const parent_specific = $(".summary-grid > #summary-specific");
 
   const addFirst = ["総修得","基礎総合科目", "専門教育科目", "履修中"]
 
@@ -600,7 +602,7 @@ function initializeSummary() {
     if(!addFirst.includes(e["credit_name"])) return;
 
     const card = createSummaryCard(e);
-    parent.append(card);
+    parent_general.append(card);
   });
 
   // 総修得、基礎総合科目、専門教育科目、履修中 以外を後から追加
@@ -608,7 +610,7 @@ function initializeSummary() {
     if(addFirst.includes(e["credit_name"])) return;
 
     const card = createSummaryCard(e);
-    parent.append(card);
+    parent_specific.append(card);
   });
 }
 
