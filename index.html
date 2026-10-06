@@ -13,14 +13,41 @@
       <header class="app-header">
         <div>
           <h1>情報ネットワーク学科 授業科目一覧 <224 225></h1>
-          <p class="app-description">履修状況・資格による単位認定・必要単位数をまとめて確認</p>
+          <div>
+            <p class="app-description">履修状況・資格による単位認定・必要単位数をまとめて確認</p>
+            <div>
+              <span>サマリーの表示方式</span>
+              <label><input type="radio" name="summaryLayout" value="compact" checked><span>コンパクト</span></label>
+              <label><input type="radio" name="summaryLayout" value="hierarchical"><span>階層</span></label>
+            </div>
+          </div>
         </div>
-        <div class="summary-grid" aria-live="polite">
-          <div id="summary-general"></div>
+        <div id="summary-grid" aria-live="polite">
+          <div id="summary-parent" class="summary-card">
+            <span class="title">全体の履修状況</span>
+            <div class="grid"></div>
+          </div>
+          <div id="summary-children" class="summary-card">
+            <span class="title">分野別サマリー</span>
+            <div class="grid"></div>
+          </div>
+          <div id="summary-all" class="summary-card">
+            <span class="title">全体</span>
+            <div class="grid"></div>
+          </div>
+          <div id="summary-basic" class="summary-card">
+            <span class="title">基礎総合科目</span>
+            <div class="grid"></div>
+          </div>
+          <div id="summary-specific" class="summary-card">
+            <span class="title">専門教育科目</span>
+            <div class="grid"></div>
+          </div>
+          <!-- <div id="summary-parent"></div>
           <div id="summary-children"></div>
           <div id="summary-all"></div>
           <div id="summary-basic"></div>
-          <div id="summary-specific"></div>
+          <div id="summary-specific"></div> -->
           <!-- <div class="summary-card">
             <span>総修得</span>
             <strong id="total-completed">0 / 124</strong>
@@ -44,7 +71,25 @@
           <button id="clear-cert" type="button">ハイライト解除</button>
           <button id="reset-state" type="button">履修状態をリセット</button>
         </div>
-        <p class="hint">講義をクリックすると「未選択 → 履修中 → 修得済み → 未選択」と切り替わります。</p>
+        <p class="legend">
+          <span>
+            <i class="legend-dot completed"></i>
+            修得済み
+          </span>
+          <span>
+            <i class="legend-dot current"></i>
+            履修中
+          </span>
+          <span>
+            <i class="legend-dot planned"></i>
+            受講予定
+          </span>
+          <span>
+            <i class="legend-dot cert"></i>
+            資格単位認定候補
+          </span>
+          <span>講義をクリックすると「未選択 → 履修中 → 修得済み → 未選択」と切り替わります。</span>
+        </p>
       </header>
       <div class="curriculum-container">
         <section class="curriculum-panel" id="basic-curriculum" data-required-credits="40">
@@ -352,25 +397,6 @@
           </div>
         </section>
       </div>
-      <footer class="legend">
-        <span>
-          <i class="legend-dot completed"></i>
-          修得済み
-        </span>
-        <span>
-          <i class="legend-dot current"></i>
-          履修中
-        </span>
-        <span>
-          <i class="legend-dot planned"></i>
-          受講予定
-        </span>
-        <span>
-          <i class="legend-dot cert"></i>
-          資格単位認定候補
-        </span>
-      </footer>
     </main>
-    <!-- <script src="script.js" defer></script> -->
   </body>
 </html>

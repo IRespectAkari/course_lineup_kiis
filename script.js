@@ -587,17 +587,17 @@ function createSummaryCard(e) {
 
 // コンパクト表示
 function renderCompactSummary() {
-  const parent_general  = $(".summary-grid > #summary-general");
-  const parent_children = $(".summary-grid > #summary-children");
+  const parent   = $("#summary-grid > #summary-parent > .grid");
+  const children = $("#summary-grid > #summary-children > .grid");
 
-  parent_general.append(
+  parent.append(
     cards.get("total"),
     cards.get("basic"),
     cards.get("specialized"),
     cards.get("inProgress"),
   );
 
-  parent_children.append(
+  children.append(
     cards.get("general"),
     cards.get("language"),
     cards.get("careerAndSkills"),
@@ -609,9 +609,9 @@ function renderCompactSummary() {
 
 // 階層表示
 function renderHierarchicalSummary() {
-  const all = $("#summary-all");
-  const basic = $("#summary-basic");
-  const specific = $("#summary-specific");
+  const all      = $("#summary-all > .grid");
+  const basic    = $("#summary-basic > .grid");
+  const specific = $("#summary-specific > .grid");
 
   all.append(
     cards.get("total"),
@@ -634,7 +634,7 @@ function renderHierarchicalSummary() {
 }
 
 function setSummaryLayout(mode) {
-  $(".summary-grid").dataset.layoutMode = mode;
+  $("#summary-grid").dataset.layoutMode = mode;
   switch(mode){
     case "compact":
       renderCompactSummary();
@@ -647,12 +647,17 @@ function setSummaryLayout(mode) {
 
 function initializeSummary() {
   setSummaryLayout("compact");
+  $$('label:has(input[name="summaryLayout"])')
+    .map(label => label.addEventListener("click", e=>{
+      const mode = $('input[name="summaryLayout"]:checked')?.value;
+      setSummaryLayout(mode);
+    }));
 
   return;
 
-  // const parent = document.querySelector(".summary-grid");
-  const parent_general  = $(".summary-grid > #summary-general");
-  const parent_specific = $(".summary-grid > #summary-specific");
+  // const parent = document.querySelector("#summary-grid");
+  const parent_general  = $("#summary-grid > #summary-parent > .grid");
+  const parent_specific = $("#summary-grid > #summary-specific > .grid");
 
   const addFirst = ["総修得","基礎総合科目", "専門教育科目", "履修中"];
 

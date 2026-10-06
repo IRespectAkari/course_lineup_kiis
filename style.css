@@ -35,7 +35,91 @@ button, select { font: inherit; }
 .app-header h1 { margin: 0; font-size: 24px; }
 .app-description { margin: 4px 0 14px; color: var(--muted); }
 
-.summary-grid {
+/* ------------------------------------------------------------------------------------------------------------------------------------------------ */
+/* --------- summary ------------------------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------------------------------------------ */
+
+.decoration-cb-oval input[type="checkbox"] {
+  display: none;
+}
+.decoration-cb-oval input[type="checkbox"]+label {
+  display: inline-block;
+  padding-left: 58px;
+  padding-right: 15px;
+  position: relative;
+  cursor: pointer;
+}
+.decoration-cb-oval input[type="checkbox"]+label::before {
+  content: "";
+  display: block;
+  position: absolute;
+  box-sizing: border-box;
+  left: 0px;
+  width: 55px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: #aaa;
+  /* 必要があれば位置合わせ */
+  /* top: 1px; */
+}
+.decoration-cb-oval input[type="checkbox"]+label::after {
+  content: "";
+  position: absolute;
+  box-sizing: border-box;
+  width: 20px;
+  height:20px;
+  border-radius: 10px;
+  background-color:#ffffff;
+  left:3px;
+  top:2px;
+}
+.decoration-cb-oval input[type="checkbox"]:checked+label::before {
+  background-color: #ff00ff;
+}
+.decoration-cb-oval input[type="checkbox"]:checked+label::after {
+  background-color:#ffffff;
+  left:32px;
+}
+.decoration-cb input[type="checkbox"]+label::after {
+  transition: left 0.5s;
+}
+.decoration-cb input[type="checkbox"]:checked+label::after {
+  transition: left 0.5s;
+}
+.decoration-cb input[type="checkbox"]+label::before {
+  transition: background-color 0.5s ease-in;
+}
+.decoration-cb input[type="checkbox"]:checked+label::before {
+  transition: background-color 0.5s ease-in;
+}
+
+:root {
+  /* 単位の状態 */
+  --color-earned: #2563EB;
+  --color-in-progress: #F59E0B;
+  --color-remaining: #E2E8F0;
+
+  /* 必要単位の達成状態 */
+  --color-complete: #16A34A;
+  --color-insufficient: #DC2626;
+
+  /* カード */
+  --color-complete-bg: #F0FDF4;
+  --color-complete-border: #86EFAC;
+
+  --color-insufficient-bg: #FEF2F2;
+  --color-insufficient-border: #FCA5A5;
+
+  /* テキスト */
+  --color-text: #1E293B;
+  --color-text-sub: #64748B;
+  --color-text-muted: #94A3B8;
+
+  /* UI */
+  --color-border: #CBD5E1;
+  --color-surface: #FFFFFF;
+}
+#summary-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(130px, 1fr));
   /* grid-template-rows: 120px 120px; */
@@ -46,7 +130,7 @@ button, select { font: inherit; }
     display: none;
   }
 
-  &[data-layout-mode="hierarchical"] > :is(#summary-general, #summary-children){
+  &[data-layout-mode="hierarchical"] > :is(#summary-parent, #summary-children){
     display: none;
   }
 }
@@ -60,30 +144,35 @@ button, select { font: inherit; }
   border-radius: 7px;
   background: #fafafa;
 }
-.summary-card span { color: var(--muted); font-size: 11px; }
+/* .summary-card span { color: var(--muted); font-size: 11px; } */
+.summary-card span { font-size: 11px; }
 .summary-card strong { font-size: 18px; }
+.summary-card span.title {font-size: 1.5em;}
 
-.summary-grid {
+
+#summary-grid {
   display: grid;
 
-  &[data-layout-mode="compact"] { grid-template-columns: 2fr 3fr; }
+  &[data-layout-mode="compact"]      { grid-template-columns: 2fr 3fr; }
   &[data-layout-mode="hierarchical"] { grid-template-columns: repeat(3, 1fr); }
 
-  > div {
+  div.grid {
     display: grid;
     grid-template-rows: repeat(2, 1fr);
     grid-template-columns: 130px, 1fr;
     gap: 8px;
 
-    &#summary-general  { grid-template-columns: repeat(2, 1fr); }
-    &#summary-children  { grid-template-columns: repeat(3, 1fr); }
-
-    &#summary-all  { grid-template-columns: 1fr 1fr; }
-    &#summary-basic  { grid-template-columns: repeat(2, 1fr); }
-    &#summary-specific  { grid-template-columns: repeat(2, 1fr); }
   }
-}
+  #summary-parent .grid  { grid-template-columns: repeat(2, 1fr); }
+  #summary-children .grid  { grid-template-columns: repeat(3, 1fr); }
 
+  #summary-all .grid  { grid-template-columns: 1fr 1fr; }
+  #summary-basic .grid  { grid-template-columns: repeat(2, 1fr); }
+  #summary-specific .grid  { grid-template-columns: repeat(2, 1fr); }
+}
+/* 色付け */
+
+/*
 #total { background-color: #2563EB; }
 #inProgress { background-color: #fdf6f0; }
 
@@ -103,7 +192,11 @@ body {
 #sp_basic { background-color: #eee917; }
 #sp_advanced { background-color: #27c3d7; }
 #sp_applied { background-color: #e9275c; }
+*/
 
+/* ------------------------------------------------------------------------------------------------------------------------------------------------ */
+/* --------- controls ----------------------------------------------------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------------------------------------------------------ */
 
 .controls {
   display: flex;
@@ -260,8 +353,7 @@ body {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 9px;
-  color: var(--muted);
-  font-size: 11px;
+  font-size: 1em;
 }
 .legend span { display: inline-flex; align-items: center; gap: 5px; }
 .legend-dot {
@@ -282,7 +374,7 @@ body {
 
 @media (max-width: 900px) {
   body { padding: 8px; }
-  .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .curriculum-container { display: block; min-width: 1180px; width: max-content; }
   .curriculum-panel + .curriculum-panel { margin-top: 18px; }
 }
