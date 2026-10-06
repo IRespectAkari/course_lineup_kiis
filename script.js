@@ -646,7 +646,7 @@ function setSummaryLayout(mode) {
 }
 
 function initializeSummary() {
-  setSummaryLayout("compact");
+  setSummaryLayout("hierarchical");
   $$('label:has(input[name="summaryLayout"])')
     .map(label => label.addEventListener("click", e=>{
       const mode = $('input[name="summaryLayout"]:checked')?.value;
