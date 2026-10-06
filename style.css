@@ -42,11 +42,11 @@ button, select { font: inherit; }
   gap: 8px;
   margin-bottom: 12px;
 
-  &[data-layout-mode="compact"] > :is(#summary-total, #summary-basic, #summary-specific){
-      display: none;
+  &[data-layout-mode="compact"] > :is(#summary-all, #summary-basic, #summary-specific){
+    display: none;
   }
 
-  &[data-layout-mode="Hierarchical"] > :is(#summary-total, #summary-basic, #summary-specific){
+  &[data-layout-mode="hierarchical"] > :is(#summary-general, #summary-children){
     display: none;
   }
 }
@@ -65,7 +65,9 @@ button, select { font: inherit; }
 
 .summary-grid {
   display: grid;
-  grid-template-columns: 2fr 3fr;
+
+  &[data-layout-mode="compact"] { grid-template-columns: 2fr 3fr; }
+  &[data-layout-mode="hierarchical"] { grid-template-columns: repeat(3, 1fr); }
 
   > div {
     display: grid;
@@ -75,8 +77,33 @@ button, select { font: inherit; }
 
     &#summary-general  { grid-template-columns: repeat(2, 1fr); }
     &#summary-children  { grid-template-columns: repeat(3, 1fr); }
+
+    &#summary-all  { grid-template-columns: 1fr 1fr; }
+    &#summary-basic  { grid-template-columns: repeat(2, 1fr); }
+    &#summary-specific  { grid-template-columns: repeat(2, 1fr); }
   }
 }
+
+#total { background-color: #2563EB; }
+#inProgress { background-color: #fdf6f0; }
+
+body {
+  background-color: #f6fafe;
+}
+
+#basic { background-color: #edfdf5; }
+#basic {
+  border: solid #cdefe0 1px;
+}
+#specialized { background-color: #ffa167; }
+
+#general { background-color: #00b107; }
+#language { background-color: #6854b6; }
+#careerAndSkills { background-color: #9b7fe8; }
+#sp_basic { background-color: #eee917; }
+#sp_advanced { background-color: #27c3d7; }
+#sp_applied { background-color: #e9275c; }
+
 
 .controls {
   display: flex;
