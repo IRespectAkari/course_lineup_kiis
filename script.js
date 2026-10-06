@@ -717,7 +717,7 @@ userStateから検索し、completedのみをfilterし、
 ['in-progress-count']
 */
 function sumCompleted2(middle) {
-console.log(middle)
+// console.log(middle)
 
   // const middleName = WHEREcreditsList(middle[0])[0];
   const middleName = WHEREcreditsList(middle)[0];
@@ -736,7 +736,7 @@ console.log(middle)
     .flatMap(([id, c]) => c)
 
   const sum = credits.reduce((c, a) => c + a, 0);
-console.log(middle, credits, sum)
+// console.log(middle, credits, sum)
   return sum;
 }
 
@@ -773,7 +773,7 @@ function updateSummary() {
 // console.log(idAndMiddle)
 
   const summarys = SELECT(creditsSummaryDb, "credit_id");
-console.log(summarys)
+// console.log(summarys)
 
   // summarys.forEach(e=>{
   // // middleSet.forEach(e=>console.log(e))
@@ -781,84 +781,48 @@ console.log(summarys)
   //   $(`#${e}`).textContent = completedCredits;
   // })
 
-  const general         = sumCompleted2("general");
-  const language        = sumCompleted2("language");
-  const careerAndSkills = sumCompleted2("careerAndSkills");
+  const creditsMap = {
+    general: sumCompleted2("general"),
+    language: sumCompleted2("language"),
+    careerAndSkills: sumCompleted2("careerAndSkills"),
 
-  const sp_basic    = sumCompleted2("sp_basic");
-  const sp_advanced = sumCompleted2("sp_advanced");
-  const sp_applied  = sumCompleted2("sp_applied");
+    sp_basic: sumCompleted2("sp_basic"),
+    sp_advanced: sumCompleted2("sp_advanced"),
+    sp_applied: sumCompleted2("sp_applied"),
 
-  // const in_progress_count    = sumCompleted2("in_progress_count");
-  const inProgress = countInProgress();
+      //in_progress_count: sumCompleted2("in_progress_count"),
+    inProgress: countInProgress(),
 
-  const basic       = general + language + careerAndSkills;
-  const specialized = sp_basic + sp_advanced + sp_applied + sumSemi();
+    basic: sumCompleted2("general") + sumCompleted2("language") + sumCompleted2("careerAndSkills"),
+    specialized: sumCompleted2("sp_basic") + sumCompleted2("sp_advanced") + sumCompleted2("sp_applied") + sumSemi(),
 
-  const total = basic + specialized;
+    total: sumCompleted2("general") + sumCompleted2("language") + sumCompleted2("careerAndSkills")
+      + sumCompleted2("sp_basic") + sumCompleted2("sp_advanced") + sumCompleted2("sp_applied")
+      + sumSemi()
+  }
 
   // ----> value <----
-  $("#general strong").textContent         = general;
-  $("#language strong").textContent        = language;
-  $("#careerAndSkills strong").textContent = careerAndSkills;
+  Object.entries(creditsMap)
+    .map(([key, credit]) => {
+      $(`#${key} strong`).textContent = credit;
+    })
 
-  $("#sp_basic strong").textContent    = sp_basic;
-  $("#sp_advanced strong").textContent = sp_advanced;
-  $("#sp_applied strong").textContent  = sp_applied;
-
-  $("#inProgress strong").textContent = inProgress;
-
-  $("#basic strong").textContent       = basic;
-  $("#specialized strong").textContent = specialized;
-
-  $("#total strong").textContent = total;
 
   // ----> progress <----
-  $("#general progress").value         = general;
-  $("#language progress").value        = language;
-  $("#careerAndSkills progress").value = careerAndSkills;
-
-  $("#sp_basic progress").value    = sp_basic;
-  $("#sp_advanced progress").value = sp_advanced;
-  $("#sp_applied progress").value  = sp_applied;
-
-  // $("#in_progress_count progress").value = in_progress_count;
-
-  $("#basic progress").value       = basic;
-  $("#specialized progress").value = specialized;
-
-  $("#total progress").value = total;
+  Object.entries(creditsMap)
+    .filter(([key, credit]) => key != "inProgress")
+    .map(([key, credit]) => {
+      $(`#${key} progress`).value = credit;
+    })
 
   // ----> diff <----
   const limitList = SELECT(creditsSummaryDb, "credit_id", "credit_limit")
 
-  $("#general .diff").textContent         = general - limitList.find(e=>e[0]=="general")[1];
-  $("#language .diff").textContent        = language - limitList.find(e=>e[0]=="language")[1];
-  $("#careerAndSkills .diff").textContent = careerAndSkills - limitList.find(e=>e[0]=="careerAndSkills")[1];
-
-  $("#sp_basic .diff").textContent    = sp_basic - limitList.find(e=>e[0]=="sp_basic")[1];
-  $("#sp_advanced .diff").textContent = sp_advanced - limitList.find(e=>e[0]=="sp_advanced")[1];
-  $("#sp_applied .diff").textContent  = sp_applied - limitList.find(e=>e[0]=="sp_applied")[1];
-
-  // $("#in_progress_count .diff").textContent = in_progress_count - limitList.find(e=>e[0]=="in_progress_count")[1];
-
-  $("#basic .diff").textContent       = basic - limitList.find(e=>e[0]=="basic")[1];
-  $("#specialized .diff").textContent = specialized - limitList.find(e=>e[0]=="specialized")[1];
-
-  $("#total .diff").textContent = total - limitList.find(e=>e[0]=="total")[1];
-
-  return;
-
-  // const basic       = sumCompleted('#basic-curriculum');
-  // const specialized = sumCompleted('#specialized-curriculum');
-
-  // const total = basic + specialized;
-
-  // $('#basic-completed').textContent = `${basic} / 40`;
-
-  // document.querySelector('#specialized-completed').textContent = `${specialized} / 84`;
-  // document.querySelector('#total-completed').textContent = `${total} / 124`;
-  // document.querySelector('#in-progress-count').textContent = `${countInProgress()}科目`;
+  Object.entries(creditsMap)
+    .filter(([key, credit]) => key != "inProgress")
+    .map(([key, credit]) => {
+      $(`#${key} .diff`).textContent = credit - limitList.find(e=>e[0]==key)[1];
+    })
 }
 
 function resetState() {
