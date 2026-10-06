@@ -41,6 +41,14 @@ button, select { font: inherit; }
   /* grid-template-rows: 120px 120px; */
   gap: 8px;
   margin-bottom: 12px;
+
+  &[data-layout-mode="compact"] > :is(#summary-total, #summary-basic, #summary-specific){
+      display: none;
+  }
+
+  &[data-layout-mode="Hierarchical"] > :is(#summary-total, #summary-basic, #summary-specific){
+    display: none;
+  }
 }
 
 .summary-card {
@@ -61,12 +69,12 @@ button, select { font: inherit; }
 
   > div {
     display: grid;
-    grid-template-rows: repeat(2, minmax(130px, 1fr));
+    grid-template-rows: repeat(2, 1fr);
     grid-template-columns: 130px, 1fr;
     gap: 8px;
 
-    &#summary-general  { grid-template-columns: repeat(2, minmax(130px, 1fr)); }
-    &#summary-specific { grid-template-columns: repeat(3, minmax(130px, 1fr)); }
+    &#summary-general  { grid-template-columns: repeat(2, 1fr); }
+    &#summary-children  { grid-template-columns: repeat(3, 1fr); }
   }
 }
 

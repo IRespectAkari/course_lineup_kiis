@@ -128,7 +128,7 @@ function csvToGroupedMap(csv, keyName, convert = {}) {
 // ---------------------------------------------------------------------------
 // Human-managed source. Keep IDs stable and never reuse a removed ID.
 const courseCsv = `id,name,term,year,credits,category,middle
-1,建学の精神と人生,前期,1,2,基礎総合科目,総合教養,
+1,建学の精神と人生,前期,1,2,基礎総合科目,総合教養
 2,宗教学,後期,1,2,基礎総合科目,総合教養
 3,心理学,前期,1,2,基礎総合科目,総合教養
 4,文学,前期,1,2,基礎総合科目,総合教養
@@ -343,12 +343,27 @@ const creditsListCsv = `credit_name,credit_id,credit_limit
 履修中,in-progress-count,0
 */
 
+const creditsListCsv2 = `credit_name,credit_id,credit_limit
+総修得,total,124
+基礎総合科目,basic,40
+総合教養,general,12
+総合語学,language,6
+実践力養成・キャリア開発,careerAndSkills,12
+専門教育科目,specialized,84
+専門基礎,sp_basic,20
+専門発展,sp_advanced,14
+専門応用,sp_applied,24
+履修中,inProgress,0
+`;
+
 // const courseDb = csvToMap(courseCsv, 'id', { credits: Number });
 const courseDb = csvToMap(courseCsv, 'id', { year: Number, credits: Number });
 
 const certificationDb = csvToGroupedMap(certCsv, 'cert_id', { course_id: String });
 
 const creditsSummaryDb = csvToMap(creditsListCsv, 'credit_id', { credit_limit: Number });
+
+const creditsSummaryDb2 = csvToMap(creditsListCsv2, 'credit_id', { credit_limit: Number });
 
 const middleSet = new Set(SELECT(courseDb, "middle").flat());
 
@@ -566,6 +581,11 @@ function populateCertificationSelect() {
 // ---------------------------------------------------------------------------
 // Credits / summary
 // ---------------------------------------------------------------------------
+// カードを生成し、mapに保存
+const cards = new Map(
+  [...creditsSummaryDb2.entries()].map(([id,obj]) => [id, createSummaryCard(obj)])
+);
+
 function createSummaryCard(e) {
   const credit_id = e["credit_id"];
   const credit_name = e["credit_name"]
@@ -590,12 +610,77 @@ function createSummaryCard(e) {
   return div;
 }
 
+// コンパクト表示
+function renderCompactSummary() {
+  const parent_general  = $(".summary-grid > #summary-general");
+  const parent_specific = $(".summary-grid > #summary-children");
+
+  parent_general.append(
+    cards.get("total"),
+    cards.get("basic"),
+    cards.get("specialized"),
+    cards.get("inProgress"),
+  );
+
+  parent_specific.append(
+    cards.get("general"),
+    cards.get("language"),
+    cards.get("careerAndSkills"),
+    cards.get("sp_basic"),
+    cards.get("sp_advanced"),
+    cards.get("sp_applied"),
+  );
+}
+
+// 階層表示
+function renderHierarchicalSummary() {
+  const all = $("#summary-all");
+  const basic = $("#summary-basic");
+  const specialized = $("#summary-specialized");
+
+  all.append(
+    cards.get("total"),
+    cards.get("inProgress"),
+  );
+
+  basic.append(
+    cards.get("basic"),
+    cards.get("general"),
+    cards.get("language"),
+    cards.get("careerAndSkills"),
+  );
+
+  specialized.append(
+    cards.get("specialized"),
+    cards.get("specialized_basic"),
+    cards.get("specialized_advanced"),
+    cards.get("specialized_applied"),
+  );
+}
+
+function setSummaryLayout(mode) {
+  $(".summary-grid").dataset.layoutMode = mode;
+  switch(mode){
+    case "compact":
+      renderCompactSummary();
+      break;
+    case "hierarchical":
+      renderHierarchicalSummary();
+      break;
+  }
+}
+
 function initializeSummary() {
+  setSummaryLayout("compact");
+
+  return;
+
   // const parent = document.querySelector(".summary-grid");
   const parent_general  = $(".summary-grid > #summary-general");
   const parent_specific = $(".summary-grid > #summary-specific");
 
-  const addFirst = ["総修得","基礎総合科目", "専門教育科目", "履修中"]
+  const addFirst = ["総修得","基礎総合科目", "専門教育科目", "履修中"];
+
 
   // 総修得、基礎総合科目、専門教育科目、履修中 を先に追加
   creditsSummaryDb.forEach(e => {
@@ -629,7 +714,7 @@ function sumCompleted(panelSelector) {
   return sum;
 }
 
-// 中分類 => 中分類の取得単位の合計
+// 中分類id => 中分類の取得単位の合計
 /*
 <中分類>の講義id達を取得し、userStateから検索し、completedのみをfilterし、合計する
 総合教養の講義idを取得
