@@ -379,6 +379,7 @@ body {
   .curriculum-panel + .curriculum-panel { margin-top: 18px; }
 }
 
+/* -------------------------------------------------------------------------------------------- */
 /* プログレスバーの拡張 */
 .credit-progress {
   --earned-percent: calc(var(--earned) / var(--required) * 100%);
@@ -410,3 +411,4 @@ body {
     #e5e7eb 100%
   );
 }
+

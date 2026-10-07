@@ -560,6 +560,22 @@ const cards = new Map(
   [...creditsSummaryDb.entries()].map(([id,obj]) => [id, createSummaryCard(obj)])
 );
 
+function createProgressbar(earned, inProgress, limit) {
+  const bar = create("div", null, {classList: "credit-progress__bar"})
+  return create("div", bar, {
+    classList: "credit-progress",
+    style: { "--earned": earned, "--in-progress": inProgress, "--required": limit }
+  });
+}
+// <div class="credit-progress" style="--earned: 2; --in-progress: 4; --required: 12;">
+//     <div class="credit-progress__bar"></div>
+// </div>
+
+function setProgress(element, earned, inProgress) {
+  element.style.setProperty("--earned", earned ?? 0);
+  element.style.setProperty("--in-progress", inProgress ?? 0);
+}
+
 function createSummaryCard(e) {
   const credit_id = e["credit_id"];
   const credit_name = e["credit_name"]
@@ -574,7 +590,8 @@ function createSummaryCard(e) {
     credit_limit ? ` / ${credit_limit}` : " 科目"
   ]);
   const progressDiff = create("span", [
-    create("progress", null, {max: credit_limit, value: 0}),
+    // create("progress", null, {max: credit_limit, value: 0}),
+    createProgressbar(0, 0, credit_limit),
     create("span", null, { classList: "diff" }),
   ]);
 
@@ -756,6 +773,29 @@ function sumSemi() {
   return sum;
 }
 
+function sumInProgress(middle) {
+
+  const middleName = WHEREcreditsList(middle)[0];
+
+// middle(総合教養)の講義idを取得
+  const middlesID = SELECT(courseDb, "id", "middle")
+    .filter(([id, m]) => m == middleName)// middleName == 総合教養
+    .flatMap(([id, m]) => id);
+
+// userStateから検索し、in-progressのみをfilterし、
+  // const completedSet = new Set(userState.keys())
+  // in-progressのidのみ取得
+  const inProgress = middlesID.filter(id => getStatus(id) == "in-progress");
+
+  const credits = SELECT(courseDb, "id", "credits")
+    .filter(([id, c]) => inProgress.includes(id))
+    .flatMap(([id, c]) => c)
+
+  const sum = credits.reduce((c, a) => c + a, 0);
+// console.log(middle, credits, sum)
+  return sum;
+}
+
 function countInProgress() {
   let count = 0;
 
@@ -799,7 +839,27 @@ function updateSummary() {
     total: sumCompleted2("general") + sumCompleted2("language") + sumCompleted2("careerAndSkills")
       + sumCompleted2("sp_basic") + sumCompleted2("sp_advanced") + sumCompleted2("sp_applied")
       + sumSemi()
-  }
+  };
+
+  const inProgressMap = {
+    general: sumInProgress("general"),
+    language: sumInProgress("language"),
+    careerAndSkills: sumInProgress("careerAndSkills"),
+
+    sp_basic: sumInProgress("sp_basic"),
+    sp_advanced: sumInProgress("sp_advanced"),
+    sp_applied: sumInProgress("sp_applied"),
+
+      //in_progress_count: sumInProgress("in_progress_count"),
+    inProgress: countInProgress(),
+
+    basic: sumInProgress("general") + sumInProgress("language") + sumInProgress("careerAndSkills"),
+    specialized: sumInProgress("sp_basic") + sumInProgress("sp_advanced") + sumInProgress("sp_applied") + sumSemi(),
+
+    total: sumInProgress("general") + sumInProgress("language") + sumInProgress("careerAndSkills")
+      + sumInProgress("sp_basic") + sumInProgress("sp_advanced") + sumInProgress("sp_applied")
+      + sumSemi()
+  };
 
   // ----> value <----
   Object.entries(creditsMap)
@@ -812,7 +872,7 @@ function updateSummary() {
   Object.entries(creditsMap)
     .filter(([key, credit]) => key != "inProgress")
     .map(([key, credit]) => {
-      $(`#${key} progress`).value = credit;
+      setProgress($(`#${key} .credit-progress`), credit, inProgressMap[key]);
     })
 
   // ----> diff <----
