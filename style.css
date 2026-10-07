@@ -33,7 +33,7 @@ button, select { font: inherit; }
 
 .app-header { margin-bottom: 16px; }
 .app-header h1 { margin: 0; font-size: 24px; }
-.app-title { display: flex;gap: 1em;align-items: center; }
+.app-title { display: flex;gap: 1em;align-items: center;flex-wrap: wrap; }
 .app-description {/* margin: 4px 0 14px; */color: var(--muted);flex-grow: 1;}
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
@@ -145,6 +145,9 @@ button, select { font: inherit; }
 
   &[data-layout-mode="compact"]      { grid-template-columns: 2fr 3fr; }
   &[data-layout-mode="hierarchical"] { grid-template-columns: 1fr 2fr 2fr; }
+  &[data-layout-mode="compact"]      { grid-template-columns: repeat(auto-fit, minmax(355px, 1fr)); }
+  &[data-layout-mode="hierarchical"] { grid-template-columns: repeat(auto-fit, minmax(355px, 1fr)); }
+
 
   div.grid {
     display: grid;
@@ -160,6 +163,7 @@ button, select { font: inherit; }
 
   #summary-parent .grid   { grid-template-columns: repeat(4, 1fr); }
   #summary-children .grid { grid-template-columns: repeat(6, 1fr); }
+  #summary-children .grid { grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); }
 
   /* 2行版
   #summary-basic .grid    { grid-template-columns: repeat(2, 1fr); }
@@ -373,7 +377,7 @@ body {
 @media (max-width: 900px) {
   body { padding: 8px; }
   #summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .curriculum-container { display: block; min-width: 1180px; width: max-content; }
+  .curriculum-container {display: block;/* min-width: 1180px; */width: max-content;}
   .curriculum-panel + .curriculum-panel { margin-top: 18px; }
 }
 
