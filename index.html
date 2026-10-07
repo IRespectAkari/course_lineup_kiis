@@ -12,14 +12,14 @@
     <main class="app">
       <header class="app-header">
         <div>
-          <h1>情報ネットワーク学科 授業科目一覧 <224 225></h1>
+          <div class="app-title">
+            <h1>情報ネットワーク学科 授業科目一覧 <224 225></h1>
+            <span class="app-description">履修状況・資格による単位認定・必要単位数をまとめて確認</span>
+          </div>
           <div>
-            <p class="app-description">履修状況・資格による単位認定・必要単位数をまとめて確認</p>
-            <div>
-              <span>サマリーの表示方式</span>
-              <label><input type="radio" name="summaryLayout" value="hierarchical" checked><span>階層</span></label>
-              <label><input type="radio" name="summaryLayout" value="compact"><span>コンパクト</span></label>
-            </div>
+            <span>サマリーの表示方式</span>
+            <label><input type="radio" name="summaryLayout" value="hierarchical" checked><span>階層</span></label>
+            <label><input type="radio" name="summaryLayout" value="compact"><span>コンパクト</span></label>
           </div>
         </div>
         <div id="summary-grid" aria-live="polite">
@@ -48,22 +48,6 @@
           <div id="summary-all"></div>
           <div id="summary-basic"></div>
           <div id="summary-specific"></div> -->
-          <!-- <div class="summary-card">
-            <span>総修得</span>
-            <strong id="total-completed">0 / 124</strong>
-          </div>
-          <div class="summary-card">
-            <span>基礎総合</span>
-            <strong id="basic-completed">0 / 40</strong>
-          </div>
-          <div class="summary-card">
-            <span>専門教育</span>
-            <strong id="specialized-completed">0 / 84</strong>
-          </div>
-          <div class="summary-card">
-            <span>履修中</span>
-            <strong id="in-progress-count">0科目</strong>
-          </div> -->
         </div>
         <div class="controls">
           <label for="cert-select">資格単位認定を表示</label>
