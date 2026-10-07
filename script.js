@@ -869,7 +869,7 @@ function updateSummary() {
         $(`#${key} strong`).textContent = credit
       }else {
         // value progress diff
-        $(`#${key} strong`).textContent = credit + "＋" + inProgressMap[key];
+        $(`#${key} strong`).textContent = credit + (inProgressMap[key] == 0 ? "" : `＋${inProgressMap[key]}`);
         setProgress($(`#${key} .credit-progress`), credit, inProgressMap[key]);
         $(`#${key} .diff`).textContent = credit - limitList.find(e=>e[0]==key)[1];
       }
