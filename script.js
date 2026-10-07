@@ -733,37 +733,19 @@ userStateから検索し、completedのみをfilterし、
 ['sp_applied-completed']
 ['in-progress-count']
 */
-function sumCompleted2(middle) {
-// console.log(middle)
-
-  // const middleName = WHEREcreditsList(middle[0])[0];
-  const middleName = WHEREcreditsList(middle)[0];
-
-// middle(総合教養)の講義idを取得
-  const middlesID = SELECT(courseDb, "id", "middle")
-    .filter(([id, m]) => m == middleName)// middleName == 総合教養
-    .flatMap(([id, m]) => id);
-// console.log(middlesID)
-// userStateから検索し、completedのみをfilterし、
-  // const completedSet = new Set(userState.keys())
-  // completedのidのみ取得
-  const completed = middlesID.filter(id => getStatus(id) == "completed");
-  const credits = SELECT(courseDb, "id", "credits")
-    .filter(([id, c]) => completed.includes(id))
-    .flatMap(([id, c]) => c)
-
-  const sum = credits.reduce((c, a) => c + a, 0);
-// console.log(middle, credits, sum)
-  return sum;
-}
+function sumCompleted2(middle) { return sumBy("completed", middle); }
+function sumInProgress(middle) { return sumBy("in-progress", middle); }
 
 function sumSemi() {
+  const middleName = "演習"
+
 // middle(総合教養)の講義idを取得
   const middlesID = SELECT(courseDb, "id", "middle")
-    .filter(([id, m]) => m == "演習")// middleName == 総合教養
+    .filter(([id, m]) => m == middleName)// middleName == 総合教養
     .flatMap(([id, m]) => id);
 
   const completed = middlesID.filter(id => getStatus(id) == "completed");
+
   const credits = SELECT(courseDb, "id", "credits")
     .filter(([id, c]) => completed.includes(id))
     .flatMap(([id, c]) => c)
@@ -773,7 +755,7 @@ function sumSemi() {
   return sum;
 }
 
-function sumInProgress(middle) {
+function sumBy(state, middle) {
 
   const middleName = WHEREcreditsList(middle)[0];
 
@@ -782,19 +764,19 @@ function sumInProgress(middle) {
     .filter(([id, m]) => m == middleName)// middleName == 総合教養
     .flatMap(([id, m]) => id);
 
-// userStateから検索し、in-progressのみをfilterし、
+  // userStateから検索し、状態がstate(in-progressなど)のみをfilterし、idのみ取得
   // const completedSet = new Set(userState.keys())
-  // in-progressのidのみ取得
-  const inProgress = middlesID.filter(id => getStatus(id) == "in-progress");
+  const list = middlesID.filter(id => getStatus(id) == state);
 
   const credits = SELECT(courseDb, "id", "credits")
-    .filter(([id, c]) => inProgress.includes(id))
+    .filter(([id, c]) => list.includes(id))
     .flatMap(([id, c]) => c)
 
   const sum = credits.reduce((c, a) => c + a, 0);
-// console.log(middle, credits, sum)
+
   return sum;
 }
+
 
 function sumInProgressSemi() {
 // middle(総合教養)の講義idを取得
@@ -850,7 +832,8 @@ function updateSummary() {
     inProgress: countInProgress(),
 
     basic: sumCompleted2("general") + sumCompleted2("language") + sumCompleted2("careerAndSkills"),
-    specialized: sumCompleted2("sp_basic") + sumCompleted2("sp_advanced") + sumCompleted2("sp_applied") + sumSemi(),
+    specialized: sumCompleted2("sp_basic") + sumCompleted2("sp_advanced") + sumCompleted2("sp_applied")
+      + sumSemi(),
 
     total: sumCompleted2("general") + sumCompleted2("language") + sumCompleted2("careerAndSkills")
       + sumCompleted2("sp_basic") + sumCompleted2("sp_advanced") + sumCompleted2("sp_applied")
@@ -878,28 +861,22 @@ function updateSummary() {
       + sumSemi()
   };
 
-  // ----> value <----
-  Object.entries(creditsMap)
-    .map(([key, credit]) => {
-      $(`#${key} strong`).textContent = credit + (key == "inProgress" ? "" : `＋${inProgressMap[key]}`);
-    })
 
-
-  // ----> progress <----
-  Object.entries(creditsMap)
-    .filter(([key, credit]) => key != "inProgress")
-    .map(([key, credit]) => {
-      setProgress($(`#${key} .credit-progress`), credit, inProgressMap[key]);
-    })
-
-  // ----> diff <----
+  // ---------------------------------------------------
   const limitList = SELECT(creditsSummaryDb, "credit_id", "credit_limit")
 
   Object.entries(creditsMap)
-    .filter(([key, credit]) => key != "inProgress")
     .map(([key, credit]) => {
-      $(`#${key} .diff`).textContent = credit - limitList.find(e=>e[0]==key)[1];
-    })
+      if (key == "inProgress"){
+        // value
+        $(`#${key} strong`).textContent = credit
+      }else {
+        // value progress diff
+        $(`#${key} strong`).textContent = credit + "＋" + inProgressMap[key];
+        setProgress($(`#${key} .credit-progress`), credit, inProgressMap[key]);
+        $(`#${key} .diff`).textContent = credit - limitList.find(e=>e[0]==key)[1];
+      }
+    });
 }
 
 function resetState() {
