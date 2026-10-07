@@ -120,56 +120,43 @@ button, select { font: inherit; }
   --color-border: #CBD5E1;
   --color-surface: #FFFFFF;
 }
-#summary-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(130px, 1fr));
-  /* grid-template-rows: 120px 120px; */
-  gap: 8px;
-  margin-bottom: 12px;
-
-  &[data-layout-mode="compact"] > :is(#summary-all, #summary-basic, #summary-specific){
-    display: none;
-  }
-
-  &[data-layout-mode="hierarchical"] > :is(#summary-parent, #summary-children){
-    display: none;
-  }
-}
 
 .summary-card {
   display: flex;
   flex-direction: column;
   gap: 3px;
-  padding: 9px 11px;
+  padding: 8px 9px;
   border: 1px solid #aaa;
   border-radius: 7px;
   background: #fafafa;
-}
-/* .summary-card span { color: var(--muted); font-size: 11px; } */
-.summary-card span { font-size: 11px; }
-.summary-card strong { font-size: 18px; }
-.summary-card span.title {font-size: 1.5em;}
 
+  span       { font-size: 11px; }
+  strong     { font-size: 18px; }
+  span.title { font-size: 1.5em; }
+}
 
 #summary-grid {
   display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+
+  &[data-layout-mode="compact"] > :is(#summary-all, #summary-basic, #summary-specific) { display: none; }
+  &[data-layout-mode="hierarchical"] > :is(#summary-parent, #summary-children)         { display: none; }
 
   &[data-layout-mode="compact"]      { grid-template-columns: 2fr 3fr; }
-  &[data-layout-mode="hierarchical"] { grid-template-columns: repeat(3, 1fr); }
+  &[data-layout-mode="hierarchical"] { grid-template-columns: 1fr 2fr 2fr; }
 
   div.grid {
     display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: 130px, 1fr;
-    gap: 8px;
-
+    gap: 6px;
   }
-  #summary-parent .grid  { grid-template-columns: repeat(2, 1fr); }
-  #summary-children .grid  { grid-template-columns: repeat(3, 1fr); }
 
-  #summary-all .grid  { grid-template-columns: 1fr 1fr; }
-  #summary-basic .grid  { grid-template-columns: repeat(2, 1fr); }
-  #summary-specific .grid  { grid-template-columns: repeat(2, 1fr); }
+  #summary-parent .grid   { grid-template-columns: repeat(2, 1fr); }
+  #summary-children .grid { grid-template-columns: repeat(3, 1fr); }
+
+  #summary-all .grid      { grid-template-columns: repeat(2, 1fr); }
+  #summary-basic .grid    { grid-template-columns: repeat(4, 1fr); }
+  #summary-specific .grid { grid-template-columns: repeat(4, 1fr); }
 }
 /* 色付け */
 
