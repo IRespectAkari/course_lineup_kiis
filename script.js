@@ -353,10 +353,12 @@ function WHEREcreditsList(equals) {
   return creditsListCsv.split("\n").map(e=>e.split(",")).find(e=>e.includes(equals))
 }
 
-// 使用例
-// SELECTandWHERE(courseDb, ([id, middle])=>middle == "総合教養", "id", "middle")
+// 使用例 - middleが総合教養となっている講義のid一覧
+// => SELECTandWHERE(courseDb, table => table.middle == "総合教養", "id")
 function SELECTandWHERE(DB, condition, ...columns) {
-  return SELECT(DB, ...columns).filter(condition);
+  return [...DB.values()]
+    .filter(condition)// WHERE部
+    .map(e=>columns.map(column => e[column]))// SELECT部
 }
 
 // ---------------------------------------------------------------------------
@@ -739,16 +741,11 @@ function sumInProgress(middle) { return sumBy("in-progress", middle); }
 function sumSemi() {
   const middleName = "演習"
 
-// middle(総合教養)の講義idを取得
-  const middlesID = SELECT(courseDb, "id", "middle")
-    .filter(([id, m]) => m == middleName)// middleName == 総合教養
-    .flatMap(([id, m]) => id);
-
+// middle(総合教養)の講義idを取得 (middleName == 総合教養)
+  const middlesID = SELECTandWHERE(courseDb,  table => table.middle == middleName, "id").flat();
   const completed = middlesID.filter(id => getStatus(id) == "completed");
 
-  const credits = SELECT(courseDb, "id", "credits")
-    .filter(([id, c]) => completed.includes(id))
-    .flatMap(([id, c]) => c)
+  const credits = SELECTandWHERE(courseDb, table => completed.includes(table.id), "credits").flat()
 
   const sum = credits.reduce((c, a) => c + a, 0);
 // console.log(middle, credits, sum)
