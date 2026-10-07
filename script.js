@@ -881,7 +881,7 @@ function updateSummary() {
   // ----> value <----
   Object.entries(creditsMap)
     .map(([key, credit]) => {
-      $(`#${key} strong`).textContent = credit;
+      $(`#${key} strong`).textContent = credit + (key == "inProgress" ? "" : `＋${inProgressMap[key]}`);
     })
 
 
