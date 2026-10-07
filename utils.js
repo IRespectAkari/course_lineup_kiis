@@ -81,6 +81,16 @@ function addChild(parent, children) {
     });
 }
 
+// スタイルの適用
+function setStyles(element, styles) {
+  Object.entries(styles).forEach(([key, value]) => {
+    // キャメルケース（backgroundColor）をケバブケース（background-color）に変換
+    const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+
+    element.style.setProperty(cssKey, value);
+  });
+}
+
 /* 要素作成
  * tagName string           タグ名
  * child   string | element 文字列または要素
@@ -139,7 +149,8 @@ function create(tagName = "div", children = [], options = {}) {
         break;
 
       case "style":// style: { color: "red", maxHeight: "100px" }
-        if ("object" === typeof value) Object.assign(element.style, value);
+        // if ("object" === typeof value) Object.assign(element.style, value);
+        if ("object" === typeof value) setStyles(element, value);
         break;
 
       case "color":
