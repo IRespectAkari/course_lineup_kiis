@@ -151,12 +151,22 @@ button, select { font: inherit; }
     gap: 6px;
   }
 
-  #summary-parent .grid   { grid-template-columns: repeat(2, 1fr); }
-  #summary-children .grid { grid-template-columns: repeat(3, 1fr); }
 
   #summary-all .grid      { grid-template-columns: repeat(2, 1fr); }
   #summary-basic .grid    { grid-template-columns: repeat(4, 1fr); }
   #summary-specific .grid { grid-template-columns: repeat(4, 1fr); }
+
+
+
+  #summary-parent .grid   { grid-template-columns: repeat(4, 1fr); }
+  #summary-children .grid { grid-template-columns: repeat(6, 1fr); }
+
+  /* 2行版
+  #summary-basic .grid    { grid-template-columns: repeat(2, 1fr); }
+  #summary-specific .grid { grid-template-columns: repeat(2, 1fr); }
+  #summary-parent .grid   { grid-template-columns: repeat(2, 1fr); }
+  #summary-children .grid { grid-template-columns: repeat(3, 1fr); }
+  */
 }
 /* 色付け */
 
