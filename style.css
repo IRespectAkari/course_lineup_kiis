@@ -144,26 +144,26 @@ button, select { font: inherit; }
   &[data-layout-mode="hierarchical"] > :is(#summary-parent, #summary-children)         { display: none; }
 
   &[data-layout-mode="compact"]      { grid-template-columns: 2fr 3fr; }
-  &[data-layout-mode="hierarchical"] { grid-template-columns: 1fr 2fr 2fr; }
-  &[data-layout-mode="compact"]      { grid-template-columns: repeat(auto-fit, minmax(355px, 1fr)); }
-  &[data-layout-mode="hierarchical"] { grid-template-columns: repeat(auto-fit, minmax(355px, 1fr)); }
-
+  &[data-layout-mode="hierarchical"] { grid-template-columns: 1fr 2fr 2fr; }/* PC・広い画面（デフォルト）：1:2:2 の比率で3列に並べる */
 
   div.grid {
     display: grid;
     gap: 6px;
   }
 
-
   #summary-all .grid      { grid-template-columns: repeat(2, 1fr); }
   #summary-basic .grid    { grid-template-columns: repeat(4, 1fr); }
   #summary-specific .grid { grid-template-columns: repeat(4, 1fr); }
 
-
-
   #summary-parent .grid   { grid-template-columns: repeat(4, 1fr); }
   #summary-children .grid { grid-template-columns: repeat(6, 1fr); }
-  #summary-children .grid { grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); }
+
+  /* スマホ表示時（768px以下）：1列（縦並び）に切り替える */
+  @media (max-width: 768px) {
+    &[data-layout-mode="hierarchical"] { grid-template-columns: 1fr; }
+    &[data-layout-mode="compact"]      { grid-template-columns: repeat(auto-fit, minmax(355px, 1fr)); }
+    #summary-children .grid { grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); }
+  }
 
   /* 2行版
   #summary-basic .grid    { grid-template-columns: repeat(2, 1fr); }
