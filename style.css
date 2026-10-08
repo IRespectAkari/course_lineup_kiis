@@ -370,7 +370,7 @@ body {
 .legend-dot.planned { background: var(--planned); }
 .legend-dot.cert { background: var(--cert); }
 
-@media (max-width: 1450px) {
+@media (width < 1300px) {
   .curriculum-container { grid-template-columns: 1fr; }
 }
 
