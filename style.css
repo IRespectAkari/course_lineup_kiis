@@ -122,8 +122,9 @@ button, select { font: inherit; }
 }
 
 .summary-card {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 4;
   gap: 3px;
   padding: 8px 9px;
   border: 1px solid #aaa;
