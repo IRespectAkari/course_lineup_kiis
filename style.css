@@ -11,6 +11,7 @@
   --current: #fff2a8;
   --planned: #d8edff;
   --cert: #f7c948;
+  --required: #ffc7c7;
 }
 
 * { box-sizing: border-box; }
@@ -398,6 +399,7 @@ body {
     &.current { background: var(--current); }
     &.planned { background: var(--planned); }
     &.cert { background: var(--cert); }
+    &.required { background: var(--required) }
   }
 }
 
