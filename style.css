@@ -238,17 +238,24 @@ body {
 .curriculum-panel {
   min-width: 0;
 
-  h2 {
+  .curriculum-title {
+    display: flex;
+    align-items: center;
+    gap: 2em;
     margin: 0 0 5px;
-    font-size: 17px;
+
+    h2 {
+      font-size: 17px;
+      margin: 0;
+    }
+
+    .panel-note {
+      color: #d00;
+      font-weight: 700;
+      margin: 0;
+    }
   }
 }
-.panel-note {
-  margin: 0 0 7px;
-  color: #d00;
-  font-weight: 700;
-}
-
 .curriculum-grid {
   display: grid;
   grid-template-columns: 30px 30px 30px repeat(4, minmax(145px, 1fr));
