@@ -7,11 +7,11 @@
   --green: #ecffd9;
   --pink: #ffe7fb;
   --header: #f6f6f6;
-  --completed: #bfe9c7;
-  --current: #fff2a8;
-  --planned: #d8edff;
-  --cert: #f7c948;
-  --required: #ffc7c7;
+  --completed-color: #bfe9c7;
+  --current-color: #fff2a8;
+  --planned-color: #d8edff;
+  --cert-color: #f7c948;
+  --required-color: #ffc7c7;
 }
 
 * { box-sizing: border-box; }
@@ -326,7 +326,7 @@ body {
   outline: none;
   /* max-height: 1em; */
 
-  &.required { background-color: var(--required); }
+  &.required { background-color: var(--required-color); }
   &:hover { background: rgb(255 255 255 / 45%); }
   &:last-child { border-bottom: 0; }
   &:focus-visible { box-shadow: inset 0 0 0 2px #2f80ed; }
@@ -343,28 +343,28 @@ body {
 
 .course{
   &.status-in-progress {
-    background: var(--current);
+    background: var(--current-color);
     box-shadow: inset 3px 0 0 #e0ac00;
   }
 
   &.status-completed {
-    background: var(--completed);
+    background: var(--completed-color);
     box-shadow: inset 3px 0 0 #399653;
 
     .course-name { text-decoration: line-through; opacity: .72; }
   }
 
   &.status-planned {
-    background: var(--planned);
+    background: var(--planned-color);
     box-shadow: inset 3px 0 0 #438ccb;
   }
 
   &.cert-highlight {
-    box-shadow: inset 0 0 0 2px var(--cert), 0 0 0 1px rgb(247 201 72 / 60%);
+    box-shadow: inset 0 0 0 2px var(--cert-color), 0 0 0 1px rgb(247 201 72 / 60%);
     z-index: 2;
 
     &.status-completed {
-      box-shadow: inset 0 0 0 2px var(--cert), inset 3px 0 0 #399653;
+      box-shadow: inset 0 0 0 2px var(--cert-color), inset 3px 0 0 #399653;
     }
   }
 }
@@ -395,11 +395,11 @@ body {
     border: 1px solid #999;
     border-radius: 3px;
 
-    &.completed { background: var(--completed); }
-    &.current { background: var(--current); }
-    &.planned { background: var(--planned); }
-    &.cert { background: var(--cert); }
-    &.required { background: var(--required) }
+    &.completed { background: var(--completed-color); }
+    &.current { background: var(--current-color); }
+    &.planned { background: var(--planned-color); }
+    &.cert { background: var(--cert-color); }
+    &.required { background: var(--required-color) }
   }
 }
 
@@ -417,8 +417,8 @@ body {
 /* -------------------------------------------------------------------------------------------- */
 /* プログレスバーの拡張 */
 .credit-progress {
-  --earned-percent: calc(var(--earned) / var(--required) * 100%);
-  --in-progress-percent: calc(var(--in-progress) / var(--required) * 100%);
+  --earned-percent: calc(var(--earned-credit) / var(--required-credit) * 100%);
+  --in-progress-percent: calc(var(--in-progress-credit) / var(--required-credit) * 100%);
 
   width: 100%;
   height: 10px;

@@ -576,16 +576,16 @@ function createProgressbar(earned, inProgress, limit) {
   const bar = create("div", null, {classList: "credit-progress__bar"})
   return create("div", bar, {
     classList: "credit-progress",
-    style: { "--earned": earned, "--in-progress": inProgress, "--required": limit }
+    style: { "--earned-credit": earned, "--in-progress-credit": inProgress, "--required-credit": limit }
   });
 }
-// <div class="credit-progress" style="--earned: 2; --in-progress: 4; --required: 12;">
+// <div class="credit-progress" style="--earned-credit: 2; --in-progress-credit: 4; --required-credit: 12;">
 //     <div class="credit-progress__bar"></div>
 // </div>
 
 function setProgress(element, earned, inProgress) {
-  element.style.setProperty("--earned", earned ?? 0);
-  element.style.setProperty("--in-progress", inProgress ?? 0);
+  element.style.setProperty("--earned-credit", earned ?? 0);
+  element.style.setProperty("--in-progress-credit", inProgress ?? 0);
 }
 
 function createSummaryCard(e) {
