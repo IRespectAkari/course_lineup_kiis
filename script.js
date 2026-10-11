@@ -332,6 +332,9 @@ const creditsListCsv = `credit_name,credit_id,credit_limit
 履修中,inProgress,0
 `;
 
+// course_id
+const requiredCourseCsv = '1,5,16,30,32,34,35,41,50,59,75,56,65,107,109,111,108,110,112,47';
+
 // const courseDb = csvToMap(courseCsv, 'id', { credits: Number });
 const courseDb = csvToMap(courseCsv, 'id', { year: Number, credits: Number });
 
@@ -340,6 +343,8 @@ const certificationDb = csvToGroupedMap(certCsv, 'cert_id', { course_id: String 
 const creditsSummaryDb = csvToMap(creditsListCsv, 'credit_id', { credit_limit: Number });
 
 const middleSet = new Set(SELECT(courseDb, "middle").flat());
+
+const requiredCourseSet = new Set(requiredCourseCsv.split(","));
 
 // ---------------------------------------------------------------------------
 // SELECT 再現
@@ -424,11 +429,16 @@ function initializeCourses() {
       const courseId = String(element.dataset.courseId);
 
       const course = courseDb.get(courseId);
+      const isRequired = requiredCourseSet.has(courseId);
 
       if (!course) {
         element.classList.add('data-error');
         element.textContent = `未登録ID: ${courseId}`;
         return;
+      }
+
+      if(isRequired) {
+        element.classList.add("required");
       }
 
       element.replaceChildren(
