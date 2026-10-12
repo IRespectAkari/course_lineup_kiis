@@ -915,6 +915,12 @@ document.addEventListener(
         resetState
       );
 
+    $("#summary-display").addEventListener("click", _ => {
+      const summary = $("#summary-grid");
+      summary.classList.toggle("hidden");
+      $("#summary-display").textContent = summary.classList.contains("hidden") ? "サマリー表示" : "サマリー非表示";
+    });
+
     updateSummary();
   }
 );

@@ -144,6 +144,8 @@ button, select { font: inherit; }
   gap: 6px;
   margin-bottom: 12px;
 
+  /* &.hidden { display: none; } */
+
   &[data-layout-mode="compact"] > :is(#summary-all, #summary-basic, #summary-specific) { display: none; }
   &[data-layout-mode="hierarchical"] > :is(#summary-parent, #summary-children)         { display: none; }
 
@@ -176,6 +178,43 @@ button, select { font: inherit; }
   #summary-children .grid { grid-template-columns: repeat(3, 1fr); }
   */
 }
+
+button#summary-display {
+  font-weight: bold;
+  width: 10em;
+  margin-right: 1em;
+}
+
+#summary-grid {
+
+  &.hidden {
+    grid-template-rows: 0fr; /* 高さを0にする */
+    opacity: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    * {
+      min-height: 0;
+      /* 高さを0にする */
+      grid-template-rows: 0fr;
+    }
+  }
+
+  display: grid;
+  grid-template-rows: 1fr; /* 開いているとき */
+  opacity: 1;
+  overflow: hidden;
+  transition:
+    grid-template-rows 0.5s ease-in-out,
+    opacity 0.5s ease-in-out,
+    margin 0.5s ease-in-out;
+
+  * {
+    min-height: 0;
+  }
+}
+
+
 /* 色付け */
 
 /*
