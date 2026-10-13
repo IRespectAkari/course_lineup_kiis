@@ -406,6 +406,10 @@ body {
   white-space: nowrap;
   font-size: 11px;
 }
+.course-term {
+  &.first { color: red; }
+  &.second { color: blue; }
+}
 .course-credits { text-align: right; font-weight: 700; }
 
 .course{

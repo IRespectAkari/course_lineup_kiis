@@ -443,7 +443,7 @@ function initializeCourses() {
 
       element.replaceChildren(
         create("span", course.name,        {classList: "course-name"}),
-        create("span", `(${course.term})`, {classList: "course-term"}),
+        create("span", `(${course.term})`, {classList: ["course-term", (course.term == "前期" ? "first" : "second")]}),
         create("span", course.credits ? `${course.credits}` : '', {classList: "course-credits"}),
       )
 
