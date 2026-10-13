@@ -179,10 +179,22 @@ button, select { font: inherit; }
   */
 }
 
+/* サマリー表示操作ボタン */
 button#summary-display {
   font-weight: bold;
-  width: 10em;
-  margin-right: 1em;
+  width: 8.5em;
+  margin-right: 0.5em;
+
+  ~ label {
+    border: 1px solid black;
+    border-radius: 0.5em;
+    padding: 0.2em 0.5em;
+
+    &:has(:checked) { background-color: #ffcaca; }
+
+    input[type="radio"] { display: none; }
+  }
+
 }
 
 /* 非表示切り替え */
