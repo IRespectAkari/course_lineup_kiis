@@ -33,7 +33,7 @@ button, select { font: inherit; }
 }
 
 .app-header { margin-bottom: 16px; }
-.app-header h1 { margin: 0; font-size: 24px; }
+.app-header h1 {margin: 0;font-size: 24px;display: flex;flex-wrap: wrap;}
 .app-title { display: flex;gap: 1em;align-items: center;flex-wrap: wrap; }
 .app-description {/* margin: 4px 0 14px; */color: var(--muted);flex-grow: 1;}
 
